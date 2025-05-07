@@ -2,8 +2,8 @@
 
 # Sneakers
 
-This is an explainatory README for the educational problem project "Sneakers".
-I try to develop the following skills:
+This is an explanatory README for the educational problem project "Sneakers".
+I aim to develop the following skills:
 - problem solving
 - logical reasoning
 - algorithmic thinking
@@ -12,7 +12,7 @@ I try to develop the following skills:
 
 ## Problem
 
-Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs by different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
+Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
 
 Tom found a few websites that sell the sneakers he picked. To decide which store to buy from he made the following table:
 
@@ -34,7 +34,7 @@ Tom needs to decide which store to buy from. Assuming that the quality of the sn
 ### Elements: extract
 `descision`, `store list`, `store`, `deal price`
 
-Tom's table represents a `stores list` helping to make a `decision` to pick a `store` based on the best `deal price`.
+Tom's table represents a `store list` helping to make a `decision` to pick a `store` based on the best `deal price`.
 
 #### `decision`
 The most important element of the problem is answer itself: a specific store, `descision` to be made.
@@ -59,8 +59,7 @@ result:
 ```
 
 >[!tip]
->TRY and PLAY online
-[Click the red RUN button (top right) and feel free to change the code and play around](https://onecompiler.com/python/43gze9xnr)
+>TRY and PLAY online [Click the red RUN button (top right) and feel free to change the code and play around](https://onecompiler.com/python/43gze9xnr)
 
 
 ####  `store`
@@ -108,7 +107,7 @@ Fortunately `python` has a built-in function `min()`. It can take a list of numb
 Print `min()` and put a list name inside round "`( )`" brackets: min(list_name).
 
 
-Lets continue developing our [small python program](#-`python-list`-small-bite-(skippable)) and find out the cheapest sneakers price to depict the work of python `min()` function.
+Let's continue developing our [small python program](#python-list-small-bite-skippable) and find out the cheapest sneakers price to depict the work of the Python `min()` function.
 
 
 ```python
