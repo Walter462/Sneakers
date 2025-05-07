@@ -58,7 +58,8 @@ result:
 [97.89, 93.68, 105.26, 100.00]
 ```
 
->[!tip]  TRY and PLAY online
+>[!tip]
+>TRY and PLAY online
 [Click the red RUN button (top right) and feel free to change the code and play around](https://onecompiler.com/python/43gze9xnr)
 
 
@@ -73,7 +74,9 @@ The `descision` is based on the information about the `store` `deal price`. Ther
 
 We can make `deal price` element more detailed by adding sub-elements to it but the main point here that no relevant information is lost. To keep it simple we avoid adding more known sub elements at this stage. Moreover the system  can increase in complexity. That means that Tom later can find some other factors impacting the deal price: (transaction fees, delivery insurance etc.). Having such abstraction as `deal price` can help us to handle this new information.
 
-> [!important] `deal price` abstraction simplifies problem solving and potentially make the problem solving algorithm more flexible.
+> [!important]
+> `deal price` abstraction simplifies problem solving and potentially make the problem solving algorithm more flexible.
+
 ### Elements: relations
 For now we got 4 elements:
  - `decision`
@@ -82,7 +85,6 @@ For now we got 4 elements:
  - `deal price`
 Now lets take a closer look at elements combinatorics based on the common sense.
 #### `decision` <--> `store list`
-
 `descision` is a result of searching the lowest `deal price`  in the `store list`. 
 Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. To make it more abstract we can recognise that as searching minimum value in a list algoritm.
 
@@ -90,7 +92,8 @@ Output (algorithm returns a value): `descision`
 Algorithm (apply to input): find minimum
 Input (algorithms gets a data to work on): `store list`
 
->[!note] Finding list minimum data flow diagram:
+>[!note]
+>Finding list minimum data flow diagram:
 >```mermaid
 >%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 >graph LR
@@ -129,9 +132,11 @@ The sneakers price list: [97.89, 93.68, 105.26, 100.0]
 Minimal price is: 93.68
 ```
 
->[!tip]  TRY and PLAY online
+>[!tip]
+>TRY and PLAY online
 [Click the red RUN button (top right) and feel free to change the code and play around](https://onecompiler.com/python/43gzn7zvr)
 
 
->[!CAUTION] This is NOT a `store` `deal price`! We excluded other important pricing factors such as delivery fee and store-specific conditions.
+>[!CAUTION]
+>This is NOT a `store` `deal price`! We excluded other important pricing factors such as delivery fee and store-specific conditions.
 
