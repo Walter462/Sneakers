@@ -33,7 +33,7 @@ Lets take a brief look at the table.
 ---
 
 ## 4. Elements: extract
-`descision`, `store list`, `store`, `deal price`
+`decision`, `store list`, `store`, `deal price`
 
 
 Tom's table represents a `store list` helping to make a `decision` to pick a `store` based on the best `deal price`.
@@ -43,7 +43,7 @@ Tom's table represents a `store list` helping to make a `decision` to pick a `st
 ### 4.1. `decision`
 
 
-The most important element of the problem is answer itself: a specific store, `descision` to be made.
+The most important element of the problem is the answer itself: a specific store, `decision` to be made.
 
 ---
 
@@ -79,13 +79,14 @@ Store list consists of individual stores. It is the first Tom's table column.
 ---
 
 ### 4.4. `deal price`
-The `descision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
+The `decision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
 - sneakers price
 - delivery fee
 - additional conditions
 
 We can make `deal price` element more detailed by adding sub-elements to it but the main point here that no relevant information is lost. To keep it simple we avoid adding more known sub elements at this stage. Moreover the system  can increase in complexity. That means that Tom later can find some other factors impacting the deal price: (transaction fees, delivery insurance etc.). Having such abstraction as `deal price` can help us to handle this new information.
 
+<a name="deal-price-abstraction-table"></a>
 To sum up, we can say that we united 3 columns into one abstraction: **`deal price`**.  
 The Tom's table could look something like this:
 
@@ -145,11 +146,11 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 
 ---
 
-### 5.1. `decision` <--> `store list`
-`descision` is a result of searching the lowest `deal price`  in the `store list`. 
+### 5.1. `decision` <-> `store list`
+`decision` is a result of searching the lowest `deal price`  in the `store list`. 
 Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise that as searching minimum value in a list algoritm.
 
-Output (algorithm returns a value): `descision`
+Output (algorithm returns a value): `decision`
 Algorithm (apply to input): find minimum
 Input (algorithms gets a data to work on): `store list`
 
@@ -159,7 +160,7 @@ Input (algorithms gets a data to work on): `store list`
 >%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 >graph LR
 >	in@{label: "Input: \n <code>list=[item1, item2, item3]</code>"}
->	fn@{shape: diamond, label: "Find mininum value\n algorithm:\n <code>min(list)</code>"}
+>	fn@{shape: diamond, label: "Find minimum value\n algorithm:\n <code>min(list)</code>"}
 >	out@{label: "Output: \n <code>item</code> "}
 >	in --- fn --- out
 >```
@@ -170,7 +171,7 @@ Input (algorithms gets a data to work on): `store list`
 `python list` small bite (skippable section)
 Fortunately `python` has a built-in function `min()`. It can take a list of numbers and return a minimal  value. Put a list name inside round "`( )`" brackets of `min()`: `min(list_name)`.
 
-[small python program](#-store-list)
+Lits change our [small python program](#42-store-list)
 
 
 ```python
@@ -200,7 +201,9 @@ Minimal price is: 93.68
 
 
 >[!CAUTION]
-[table above](#-deal-price)
- 
+> `min(sneakers_price_list)` is NOT a minimal `store` `deal price`! We excluded other important pricing factors such as delivery fee and store-specific conditions. See the difference in the  [table above](#deal-price-abstraction-table).
 
 ---
+
+### 5.2 `store list` <-> `store`
+
