@@ -23,27 +23,37 @@ Tom found a few websites that sell the sneakers he picked. To decide which store
 | Store 3 | $105.26$            | $2.11$            | Discount of $10.53$ USD on the first order    |
 | Store 4 | $100.00$            | Free              | None                                          |
 
-## Reasoning
 
-### Categorise the problem
+## Categorise the problem
 
 Tom needs to decide which store to buy from. Assuming that the quality of the sneakers is the same, the `decision` problem is to choose the store with the lowest expenses (best `deal price`).
 
-> Lets take a brief look at the table.
+Lets take a brief look at the table.
 
-### Elements: extract
+---
+
+## Elements: extract
 `descision`, `store list`, `store`, `deal price`
+
 
 Tom's table represents a `store list` helping to make a `decision` to pick a `store` based on the best `deal price`.
 
-#### `decision`
+---
+
+### `decision`
+
+
 The most important element of the problem is answer itself: a specific store, `descision` to be made.
-#### `store list`
+
+---
+
+### `store list`
 
 Second element is the store list to pick a store from. 
 
->[!tip] `python list` small bite (skippable section)
-We can store lists inside computer memory using `python`.
+>[!tip] 
+`python list` small bite (skippable section).
+We can store lists inside computer memory using `python` programming language.
 Put comma "`,`" separated items in square "`[ ]`" brackets to create a list: `[item1, item2, item3 ]`.  Use equals `=` to assign a name to a list.
 Use `print( )` to display a list. `#` comment a line (execution ignore).
 
@@ -61,11 +71,14 @@ result:
 >[!tip]
 >TRY and PLAY online [Click the red RUN button (top right) and feel free to change the code and play around](https://onecompiler.com/python/43gze9xnr)
 
+---
 
-####  `store`
+###  `store`
 Store list consists of individual stores. It is the first Tom's table column.
 
-#### `deal price`
+---
+
+### `deal price`
 The `descision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
 - sneakers price
 - delivery fee
@@ -116,11 +129,12 @@ The Tom's table could look something like this:
   </tbody>
 </table>
 
-> **ℹ️ Important**  
+> [!important] 
 > The `deal price` abstraction simplifies problem solving and can potentially make the algorithm more flexible. Later we can add other `deal price` sub-elements if needed (like transaction fees, delivery insurance etc.).
 
+--- 
 
-### Elements: relations
+## Elements: relations
 For now we got 4 elements:
  - `decision`
  - `store list`
@@ -129,7 +143,9 @@ For now we got 4 elements:
   
 Now lets take a closer look at elements combinatorics based on the common sense.
 
-#### `decision` <--> `store list`
+---
+
+### `decision` <--> `store list`
 `descision` is a result of searching the lowest `deal price`  in the `store list`. 
 Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise that as searching minimum value in a list algoritm.
 
@@ -148,8 +164,10 @@ Input (algorithms gets a data to work on): `store list`
 >	in --- fn --- out
 >```
 
+---
 
->[!tip] `python list` small bite (skippable section)
+>[!tip] 
+`python list` small bite (skippable section)
 Fortunately `python` has a built-in function `min()`. It can take a list of numbers and return a minimal  value. Put a list name inside round "`( )`" brackets of `min()`: `min(list_name)`.
 
 Let's continue developing our [small python program](#store-list) and find out the cheapest sneakers price to depict how the Python `min()` function works.
@@ -182,5 +200,7 @@ Minimal price is: 93.68
 
 
 >[!CAUTION]
->This is NOT a `store` `deal price`! We excluded other important pricing factors such as delivery fee and store-specific conditions.
+> `min(sneakers_price_list)` is NOT a minimal `store` `deal price`! We excluded other important pricing factors such as delivery fee and store-specific conditions. See the difference in the [table above](#deal-price)
+ 
 
+---
