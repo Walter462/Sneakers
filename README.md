@@ -1,14 +1,14 @@
-[TOC]
-
 # Sneakers
 
-This is an explanatory README for the educational problem project "Sneakers".
-I aim to develop the following skills:
+This is a  README for the educational problem project "Sneakers".
+I am still learning and focus on develop the following skills:
 - problem solving
 - logical reasoning
 - algorithmic thinking
 - mathematical thinking
 - computer science and software engineering
+
+If you are interested please join my reasoning logic and feel free to criticize it.
 
 ## Problem
 
@@ -40,12 +40,12 @@ Tom's table represents a `store list` helping to make a `decision` to pick a `st
 The most important element of the problem is answer itself: a specific store, `descision` to be made.
 #### `store list`
 
-Second element is the store list to pick a store from. We can store lists inside computer memory using `python` for example.
-##### `python list` small bite (skippable)
- Put comma "`,`" separated items in square "`[ ]`" brackets to create a list: `[item1, item2, item3 ]`.  Use equals `=` to assign a name to a list.
-Use `print( )` to display a list.
-`#` comment a line (execution ignore).
+Second element is the store list to pick a store from. 
 
+>[!tip] `python list` small bite (skippable section)
+We can store lists inside computer memory using `python`.
+Put comma "`,`" separated items in square "`[ ]`" brackets to create a list: `[item1, item2, item3 ]`.  Use equals `=` to assign a name to a list.
+Use `print( )` to display a list. `#` comment a line (execution ignore).
 
 ```python
 # create sneakers price list and assign it to a variable `sneakers_price_list`
@@ -63,9 +63,9 @@ result:
 
 
 ####  `store`
-`store list` consists of individual stores. It is the first Tom's table column.
-#### `deal price`
+Store list consists of individual stores. It is the first Tom's table column.
 
+#### `deal price`
 The `descision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
 - sneakers price
 - delivery fee
@@ -73,8 +73,52 @@ The `descision` is based on the information about the `store` `deal price`. Ther
 
 We can make `deal price` element more detailed by adding sub-elements to it but the main point here that no relevant information is lost. To keep it simple we avoid adding more known sub elements at this stage. Moreover the system  can increase in complexity. That means that Tom later can find some other factors impacting the deal price: (transaction fees, delivery insurance etc.). Having such abstraction as `deal price` can help us to handle this new information.
 
-> [!important]
-> `deal price` abstraction simplifies problem solving and potentially make the problem solving algorithm more flexible.
+To sum up, we can say that we united 3 columns into one abstraction: **`deal price`**.  
+The Tom's table could look something like this:
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Store</th>
+      <th colspan="3">Deal price, USD</th>
+    </tr>
+    <tr>
+      <th>Sneakers price, USD</th>
+      <th>Delivery fee, USD</th>
+      <th>Additional Conditions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Store 1</td>
+      <td>$97.89</td>
+      <td>$3.16</td>
+      <td>Free delivery for cart sums over $105.26 USD</td>
+    </tr>
+    <tr>
+      <td>Store 2</td>
+      <td>$93.68</td>
+      <td>$5.26</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>Store 3</td>
+      <td>$105.26</td>
+      <td>$2.11</td>
+      <td>Discount of $10.53 USD on the first order</td>
+    </tr>
+    <tr>
+      <td>Store 4</td>
+      <td>$100.00</td>
+      <td>Free</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+
+> **ℹ️ Important**  
+> The `deal price` abstraction simplifies problem solving and can potentially make the algorithm more flexible. Later we can add other `deal price` sub-elements if needed (like transaction fees, delivery insurance etc.).
+
 
 ### Elements: relations
 For now we got 4 elements:
@@ -82,10 +126,12 @@ For now we got 4 elements:
  - `store list`
  - `store`
  - `deal price`
+  
 Now lets take a closer look at elements combinatorics based on the common sense.
+
 #### `decision` <--> `store list`
 `descision` is a result of searching the lowest `deal price`  in the `store list`. 
-Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. To make it more abstract we can recognise that as searching minimum value in a list algoritm.
+Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise that as searching minimum value in a list algoritm.
 
 Output (algorithm returns a value): `descision`
 Algorithm (apply to input): find minimum
@@ -102,12 +148,11 @@ Input (algorithms gets a data to work on): `store list`
 >	in --- fn --- out
 >```
 
-Fortunately `python` has a built-in function `min()`. It can take a list of numbers and return a minimal  value.
-##### `python min()` small bite (skippable)
-Print `min()` and put a list name inside round "`( )`" brackets: min(list_name).
 
+>[!tip] `python list` small bite (skippable section)
+Fortunately `python` has a built-in function `min()`. It can take a list of numbers and return a minimal  value. Put a list name inside round "`( )`" brackets of `min()`: `min(list_name)`.
 
-Let's continue developing our [small python program](#python-list-small-bite-skippable) and find out the cheapest sneakers price to depict the work of the Python `min()` function.
+Let's continue developing our [small python program](#store-list) and find out the cheapest sneakers price to depict how the Python `min()` function works.
 
 
 ```python
