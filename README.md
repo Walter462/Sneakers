@@ -1,4 +1,4 @@
-# Sneakers
+# 1. Sneakers
 
 This is a  README for the educational problem project "Sneakers".
 I am still learning and focus on develop the following skills:
@@ -10,7 +10,7 @@ I am still learning and focus on develop the following skills:
 
 If you are interested please join my reasoning logic and feel free to criticize it.
 
-## Problem
+## 2. Problem
 
 Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
 
@@ -24,7 +24,7 @@ Tom found a few websites that sell the sneakers he picked. To decide which store
 | Store 4 | $100.00$            | Free              | None                                          |
 
 
-## Categorise the problem
+## 3. Categorise the problem
 
 Tom needs to decide which store to buy from. Assuming that the quality of the sneakers is the same, the `decision` problem is to choose the store with the lowest expenses (best `deal price`).
 
@@ -32,7 +32,7 @@ Lets take a brief look at the table.
 
 ---
 
-## Elements: extract
+## 4. Elements: extract
 `descision`, `store list`, `store`, `deal price`
 
 
@@ -40,14 +40,14 @@ Tom's table represents a `store list` helping to make a `decision` to pick a `st
 
 ---
 
-### `decision`
+### 4.1. `decision`
 
 
 The most important element of the problem is answer itself: a specific store, `descision` to be made.
 
 ---
 
-### `store list`
+### 4.2. `store list`
 
 Second element is the store list to pick a store from. 
 
@@ -73,12 +73,12 @@ result:
 
 ---
 
-###  `store`
+### 4.3. `store`
 Store list consists of individual stores. It is the first Tom's table column.
 
 ---
 
-### `deal price`
+### 4.4. `deal price`
 The `descision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
 - sneakers price
 - delivery fee
@@ -134,7 +134,7 @@ The Tom's table could look something like this:
 
 --- 
 
-## Elements: relations
+## 5. Elements: relations
 For now we got 4 elements:
  - `decision`
  - `store list`
@@ -145,7 +145,7 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 
 ---
 
-### `decision` <--> `store list`
+### 5.1. `decision` <--> `store list`
 `descision` is a result of searching the lowest `deal price`  in the `store list`. 
 Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise that as searching minimum value in a list algoritm.
 
@@ -170,7 +170,7 @@ Input (algorithms gets a data to work on): `store list`
 `python list` small bite (skippable section)
 Fortunately `python` has a built-in function `min()`. It can take a list of numbers and return a minimal  value. Put a list name inside round "`( )`" brackets of `min()`: `min(list_name)`.
 
-Let's continue developing our [small python program](#store-list) and find out the cheapest sneakers price to depict how the Python `min()` function works.
+[small python program](#-store-list)
 
 
 ```python
@@ -200,7 +200,7 @@ Minimal price is: 93.68
 
 
 >[!CAUTION]
-> `min(sneakers_price_list)` is NOT a minimal `store` `deal price`! We excluded other important pricing factors such as delivery fee and store-specific conditions. See the difference in the [table above](#deal-price)
+[table above](#-deal-price)
  
 
 ---
