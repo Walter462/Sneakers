@@ -281,12 +281,37 @@ Too keep it simple we start with the stores that have no additional conditions.
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
-  Sum@{shape: diamond, label: "$$+$$"}
+  Sum{$$+$$}
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   Deal_price@{shape: card, label: "Deal price"}
   Deal_price -->Sum  
   ```
-These are the stores 2 and 4.
+  
+  ---
+
+The whole path looks like this:
+  ```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store@{shape: doc}
+
+  Store@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
+
+  Sum2@{shape: diamond, label: "$$+$$"}
+  Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
+
+deal_price2-->|NO conditions|Sum2
+
+```
+---
+
+Stores 2 and 4 has no extra no conditions.
+
+General model looks like this:
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
