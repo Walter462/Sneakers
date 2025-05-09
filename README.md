@@ -86,10 +86,10 @@ The `decision` is based on the information about the `store` `deal price`. There
 
 We can make `deal price` element more detailed by adding sub-elements to it but the main point here that no relevant information is lost. To keep it simple we avoid adding more known sub elements at this stage. Moreover the system  can increase in complexity. That means that Tom later can find some other factors impacting the deal price: (transaction fees, delivery insurance etc.). Having such abstraction as `deal price` can help us to handle this new information.
 
-<a name="deal-price-abstraction-table"></a>
 To sum up, we can say that we united 3 columns into one abstraction: **`deal price`**.  
 The Tom's table could look something like this:
 
+<a name="deal-price-abstraction-table"></a>
 <table>
   <thead>
     <tr>
@@ -148,24 +148,39 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 
 ### 5.1. `decision` <-> `store list`
 `decision` is a result of searching the lowest `deal price`  in the `store list`. 
-Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise that as searching minimum value in a list algoritm.
+Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise a specific algorithm for this relation type: searching minimum value in a list.
 
-Output (algorithm returns a value): `decision`
-Algorithm (apply to input): find minimum
 Input (algorithms gets a data to work on): `store list`
+Algorithm (apply to input): find minimum
+Output (algorithm returns a value): `decision`
 
 >[!note]
 >Finding list minimum data flow diagram:
 >```mermaid
 >%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 >graph LR
->	in@{label: "Input: \n <code>list=[item1, item2, item3]</code>"}
->	fn@{shape: diamond, label: "Find minimum value\n algorithm:\n <code>min(list)</code>"}
->	out@{label: "Output: \n <code>item</code> "}
->	in --- fn --- out
+>	in@{label: "INPUT: \n <code>list=[item1, item2, item3]</code>"}
+>	fn@{shape: diamond, label: "ALGO\n Find minimum value\n algorithm:\n <code>min(list)</code>"}
+>	out@{label: "OUTPUT: \n <code>item</code> "}
+>	in --> fn --> out
 >```
 
+We can reverse the data flow (output -> input) and start with asking questions (not putting existing data into algorithms).
+- `decision` is asking: Which is the best deal store? Problem text does not contain such information. We decided to applying the `min( )` algorithm to find it out.
+- `min( )`  algorithm: Where is my input? Which data should I work on?
+- `store list` here is the input data.
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|which one is the best deal store?| minf
+  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf -->|which list to apply to?| StoreList@{shape: docs, label: "<code>store list</code>"}
+  ```
 ---
+
+This diagrams depict that the questions and the data flows are moving into opposite directions. The question approach can help to chunk the problem from bigger to smaller parts instead of applying combinatorics to known data.
 
 >[!tip] 
 `python list` small bite (skippable section)
@@ -206,4 +221,51 @@ Minimal price is: 93.68
 ---
 
 ### 5.2 `store list` <-> `store`
+
+`store list` includes one or more stores. `store` is an element of the `store list`. 
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+ StoreList@{shape: docs}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
+```
+
+---
+### 5.3 `store` <-> `deal price`
+`deal price` is a property of the `store`
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  Store@{shape: doc} --> |has|deal_price@{shape: card}
+```
+
+## 6. Elements: diagram
+
+Considering the problem elements and their relationships we can draw the following diagram:
+
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
+
+  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
+  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
+  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
+  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
+```
+
+We follow top to bottom approach to avoid getting lost into pricing details and other distractions.
 
