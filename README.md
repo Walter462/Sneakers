@@ -281,7 +281,7 @@ Too keep it simple we start with the stores that have no additional conditions.
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
-  Sum{$$+$$}
+  Sum@{shape: diamond, label: "&plus;"}
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   Deal_price@{shape: card, label: "Deal price"}
   Deal_price -->Sum  
@@ -301,7 +301,7 @@ graph TB
 
   Store@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: "$$+$$"}
+  Sum2@{shape: diamond, label: "+"}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
 
 deal_price2-->|NO conditions|Sum2
@@ -330,10 +330,10 @@ graph TB
   Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: "$$+$$"}
+  Sum2@{shape: diamond, label: "+"}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
 
-  Sum4@{shape: diamond, label: "$$+$$"}
+  Sum4@{shape: diamond, label: "+"}
   Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
 deal_price2-->|NO conditions|Sum2
 deal_price4-->|NO conditions|Sum4
@@ -369,7 +369,7 @@ But in case Store1 the `delivery fee` is conditional and depends on the `cart su
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   Deal_price@{shape: card, label: "Deal price"}
-  Sum@{shape: diamond, label: "$$+$$"}
+  Sum@{shape: diamond, label: "+"}
   Deal_price -->Sum  
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   
@@ -377,12 +377,12 @@ graph TB
   DeliveryDiscount@{shape: diamond, label: "discount engine"}
   
   GT@{shape: diamond, label: "<code> 105.26 > cart sum ? yes(1) / no(0)?</code>"}
-  Threshold@{shape: rect, label: "$$105.26$$"}
+  Threshold@{shape: rect, label: "105.26"}
   DeliveryDiscount -->|YES or NO|GT
   GT-->Threshold 
   GT--> cart_sum
-  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "$$3.16$$"}
-  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "$$0$$"}
+  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "3.16"}
+  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "0"}
   %%links
   ```
 
@@ -407,26 +407,26 @@ graph TB
   Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: "$$+$$"}
+  Sum2@{shape: diamond, label: "+"}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
 
-  Sum4@{shape: diamond, label: "$$+$$"}
+  Sum4@{shape: diamond, label: "+"}
   Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
   
   
 %% Sum1
-  Sum1@{shape: diamond, label: "$$+$$"}
+  Sum1@{shape: diamond, label: "+"}
   Sum1 --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   
   delivery_fee -->|which delivery price?|DeliveryDiscount
   DeliveryDiscount@{shape: diamond, label: "discount engine"}
   GT@{shape: diamond, label: "<code> 105.26 > cart sum ? yes(1) / no(0)?</code>"}
-  Threshold@{shape: rect, label: "$$105.26$$"}
+  Threshold@{shape: rect, label: "105.26"}
   DeliveryDiscount -->|YES or NO|GT
   GT-->Threshold 
   GT--> cart_sum
-  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "$$3.16$$"}
-  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "$$0$$"}
+  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "3.16"}
+  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "0"}
 
   deal_price1-->|delivery conditions|Sum1
   deal_price2-->|NO conditions|Sum2
