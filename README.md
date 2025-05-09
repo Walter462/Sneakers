@@ -267,5 +267,150 @@ graph TB
   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
 ```
 
-We follow top to bottom approach to avoid getting lost into pricing details and other distractions.
+We follow top to bottom approach, question driven approach to avoid getting lost into pricing details and other distractions.
 
+## 7. `deal price`
+Now we can discuss the `deal price` in detail. As we metioned before `deal price` is a property of the `store`. The `deal price` data is in 3 columns of the table: Sneakers price, Delivery fee and Additional Conditions. 
+We can notice that additional conditions are not applied to each store.
+
+### 7.1 `deal price` no additional conditions
+Too keep it simple we start with the stores that have no additional conditions.
+
+> $deal\ price = sneakers\ price + delivery\ fee$
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  Sum@{shape: diamond, label: "$$+$$"}
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
+  Deal_price@{shape: card, label: "Deal price"}
+  Deal_price -->Sum  
+  ```
+These are the stores 2 and 4.
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
+
+  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
+  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
+  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
+  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
+
+  Sum2@{shape: diamond, label: "$$+$$"}
+  Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
+
+  Sum4@{shape: diamond, label: "$$+$$"}
+  Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
+deal_price2-->|NO conditions|Sum2
+deal_price4-->|NO conditions|Sum4
+```
+
+> [!tip]
+> We can see the Store 2 and Store 4 apply the same algorithm to calculate the `deal price`. The only difference is the input data.
+
+### 7.2 `deal price` with additional conditions
+Now thing are getting more complicated. We need to consider the additional conditions. 
+Lets take a closer look at wordings in column `Additional Conditions` of the table. Repeat out approach and extract elements.
+
+#### 7.2.1 `deal price` with additional conditions Store 1
+> Store 1:  
+> Free delivery for cart sums over $105.26$ USD.
+
+Elements are: `cart sum`, `threshold`
+
+`cart sum` is a variable which depends on products in the cart, their price and quantity. In this case the cart sum is equal to the `sneakers price`. 
+The `threshold` is a constant value: $105.26$.
+
+The main formula atays the same:
+> $deal\ price = sneakers\ price + delivery\ fee$
+
+But in case Store1 the `delivery fee` is conditional and depends on the `cart sum`:
+> $delivery\ fee = 0$ if $cart\ sum > threshold$ else $delivery\ fee$
+
+- `cart sum` - variable
+- `threshold` - constant = $105.26$
+- `delivery fee` - constant = $3.16$
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  Deal_price@{shape: card, label: "Deal price"}
+  Sum@{shape: diamond, label: "$$+$$"}
+  Deal_price -->Sum  
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
+  
+  delivery_fee -->|which delivery price?|DeliveryDiscount
+  DeliveryDiscount@{shape: diamond, label: "discount engine"}
+  
+  GT@{shape: diamond, label: "<code> 105.26 > cart sum ? yes(1) / no(0)?</code>"}
+  Threshold@{shape: rect, label: "$$105.26$$"}
+  DeliveryDiscount -->|YES or NO|GT
+  GT-->Threshold 
+  GT--> cart_sum
+  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "$$3.16$$"}
+  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "$$0$$"}
+  %%links
+  ```
+
+---
+
+General diagram
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
+
+  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
+  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
+  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
+  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
+
+  Sum2@{shape: diamond, label: "$$+$$"}
+  Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
+
+  Sum4@{shape: diamond, label: "$$+$$"}
+  Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
+  
+  
+%% Sum1
+  Sum1@{shape: diamond, label: "$$+$$"}
+  Sum1 --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
+  
+  delivery_fee -->|which delivery price?|DeliveryDiscount
+  DeliveryDiscount@{shape: diamond, label: "discount engine"}
+  GT@{shape: diamond, label: "<code> 105.26 > cart sum ? yes(1) / no(0)?</code>"}
+  Threshold@{shape: rect, label: "$$105.26$$"}
+  DeliveryDiscount -->|YES or NO|GT
+  GT-->Threshold 
+  GT--> cart_sum
+  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "$$3.16$$"}
+  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "$$0$$"}
+
+  deal_price1-->|delivery conditions|Sum1
+  deal_price2-->|NO conditions|Sum2
+  deal_price4-->|NO conditions|Sum4
+```
+
+
+#### 7.2.2 `deal price` with additional conditions Store 2
+> Store 3:   
+> Discount of $10.53$ USD on the first order.
+
+Elements are: `discount`, `first order`
