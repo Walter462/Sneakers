@@ -295,13 +295,13 @@ The whole path looks like this:
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
   StoreList --> |includes|Store@{shape: doc}
 
   Store@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: "+"}
+  Sum2@{shape: diamond, label: " + "}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
 
 deal_price2-->|NO conditions|Sum2
@@ -318,7 +318,7 @@ General model looks like this:
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
   StoreList --> |includes|Store1@{shape: doc}
   StoreList --> |includes|Store2@{shape: doc}
@@ -330,10 +330,10 @@ graph TB
   Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: "+"}
+  Sum2@{shape: diamond, label: " + "}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
 
-  Sum4@{shape: diamond, label: "+"}
+  Sum4@{shape: diamond, label: " + "}
   Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
 deal_price2-->|NO conditions|Sum2
 deal_price4-->|NO conditions|Sum4
@@ -369,7 +369,7 @@ But in case Store1 the `delivery fee` is conditional and depends on the `cart su
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   Deal_price@{shape: card, label: "Deal price"}
-  Sum@{shape: diamond, label: "+"}
+  Sum@{shape: diamond, label: " + "}
   Deal_price -->Sum  
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   
@@ -407,15 +407,15 @@ graph TB
   Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: "+"}
+  Sum2@{shape: diamond, label: " + "}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
 
-  Sum4@{shape: diamond, label: "+"}
+  Sum4@{shape: diamond, label: " + "}
   Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
   
   
 %% Sum1
-  Sum1@{shape: diamond, label: "+"}
+  Sum1@{shape: diamond, label: " + "}
   Sum1 --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   
   delivery_fee -->|which delivery price?|DeliveryDiscount
