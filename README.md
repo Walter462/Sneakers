@@ -15,7 +15,7 @@ If you are interested please join my reasoning logic and feel free to criticize 
 Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
 
 Tom found a few websites that sell the sneakers he picked. To decide which store to buy from he made the following table:
-
+<a name="initial-table"></a>
 | Store   | Sneakers price, USD | Delivery fee, USD | Additional Conditions                         |
 | ------- | ------------------- | ----------------- | --------------------------------------------- |
 | Store 1 | $97.89$             | $3.16$            | Free delivery for cart sums over $105.26$ USD |
@@ -148,7 +148,7 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 
 ### 5.1. `decision` <-> `store list`
 `decision` is a result of searching the lowest `deal price`  in the `store list`. 
-Hence "searching the lowest `deal price`  in the `store list`" is the relation type between these 2 elements. We recognise a specific algorithm for this relation type: searching minimum value in a list.
+Hence "searching the lowest `deal price`  in the `store list`" is the relationship type between these 2 elements. We recognise a specific algorithm for this relation type: searching minimum value in a list.
 
 Input (algorithms gets a data to work on): `store list`
 Algorithm (apply to input): find minimum
@@ -165,10 +165,12 @@ Output (algorithm returns a value): `decision`
 >	in --> fn --> out
 >```
 
-We can reverse the data flow (output -> input) and start with asking questions (not putting existing data into algorithms).
+We can reverse the data flow (output -> input) by starting with asking questions.
 - `decision` is asking: Which is the best deal store? Problem text does not contain such information. We decided to applying the `min( )` algorithm to find it out.
 - `min( )`  algorithm: Where is my input? Which data should I work on?
 - `store list` here is the input data.
+
+This is recursive style of thinking.
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -177,7 +179,7 @@ graph TB
   decision -->|which one is the best deal store?| minf
   minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
   minf -->|which list to apply to?| StoreList@{shape: docs, label: "<code>store list</code>"}
-  ```
+```
 ---
 
 This diagrams depict that the questions and the data flows are moving into opposite directions. The question approach can help to chunk the problem from bigger to smaller parts instead of applying combinatorics to known data.
@@ -274,8 +276,10 @@ Now we can discuss the `deal price` in detail. As we metioned before `deal price
 We can notice that additional conditions are not applied to each store.
 
 ### 7.1 `deal price` no additional conditions
+#### 7.1.1. `deal price` no additional conditions algorithm
 Too keep it simple we start with the stores that have no additional conditions.
 
+> [!note]
 > $deal\ price = sneakers\ price + delivery\ fee$
 
 ```mermaid
@@ -287,7 +291,7 @@ graph TB
   Deal_price -->Sum  
   ```
   
-  ---
+#### 7.1.2. Problem diagrams
 
 The whole path looks like this:
   ```mermaid
@@ -300,70 +304,137 @@ graph TB
   StoreList --> |includes|Store@{shape: doc}
 
   Store@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
-
+subgraph "<code></code>"
+  direction TB 
   Sum2@{shape: diamond, label: " + "}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
-
-deal_price2-->|NO conditions|Sum2
-
+  deal_price2-->|NO conditions|Sum2
+  end 
 ```
 ---
 
+
 Stores 2 and 4 has no extra no conditions.
-
-General model looks like this:
-
-```mermaid
-%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
-graph TB
-  decision@{shape: rect, label: "<code>decision</code>"}
-  decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
-  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
-  StoreList --> |includes|Store1@{shape: doc}
-  StoreList --> |includes|Store2@{shape: doc}
-  StoreList --> |includes|Store3@{shape: doc}
-  StoreList --> |includes|Store4@{shape: doc}
-
-  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
-  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
-  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
-  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
-
-  Sum2@{shape: diamond, label: " + "}
-  Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
-
-  Sum4@{shape: diamond, label: " + "}
-  Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
-deal_price2-->|NO conditions|Sum2
-deal_price4-->|NO conditions|Sum4
-```
+The model is applicable to both stores.
+>[!note]
+> General model looks like this:
+>```mermaid
+> %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+> graph TB
+>   decision@{shape: rect, label: "<code>decision</code>"}
+>   decision -->|get best deal store| minf
+>   minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
+>   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+>   StoreList --> |includes|Store1@{shape: doc}
+>   StoreList --> |includes|Store2@{shape: doc}
+>   StoreList --> |includes|Store3@{shape: doc}
+>   StoreList --> |includes|Store4@{shape: doc}
+> 
+>   Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
+>   Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
+>   Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
+>   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
+> 
+>   Sum2@{shape: diamond, label: " + "}
+>   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
+> 
+>   Sum4@{shape: diamond, label: " + "}
+>   Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
+> deal_price2-->|NO conditions|Sum2
+> deal_price4-->|NO conditions|Sum4
+> ```
 
 > [!tip]
 > We can see the Store 2 and Store 4 apply the same algorithm to calculate the `deal price`. The only difference is the input data.
 
-### 7.2 `deal price` with additional conditions
-Now thing are getting more complicated. We need to consider the additional conditions. 
-Lets take a closer look at wordings in column `Additional Conditions` of the table. Repeat out approach and extract elements.
+#### 7.1.3. apply algorithm to Store2
+
+- sneakers price: $93.68$ USD
+-  delivery fee: $5.26$ USD
+- Additional Conditions: None
+
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  Deal_price@{shape: card, label: "98.94"}
+  Deal_price -->Sum  
+  
+  Sum@{shape: diamond, label: " + "}
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price"}
+  Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
+
+  sneakers_price --> store2.sneakers_price@{shape: rect, label: "93.68"}
+  delivery_fee --> store2.delivery_fee@{shape: rect, label: "5.26"}
+  subgraph INPUT data
+  store2.sneakers_price
+  store2.delivery_fee
+  end
+  subgraph Store2 deal price
+  Deal_price 
+  Sum
+  sneakers_price
+  delivery_fee
+  end
+```
+
+#### 7.1.4. apply algorithm to Store4
+- sneakers price: $100.00$ USD
+-  delivery fee: $0.00$ USD
+- Additional Conditions: None
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  Deal_price@{shape: card, label: "100.00"}
+  Deal_price -->Sum
+  
+  Sum@{shape: diamond, label: " + "}
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price"}
+  Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
+  sneakers_price --> store4.sneakers_price@{shape: rect, label: "100.00"}
+  delivery_fee --> store4.delivery_fee@{shape: rect, label: "0.00"}
+  subgraph INPUT data
+  store4.sneakers_price
+  store4.delivery_fee
+  end
+  subgraph Store4 deal price
+  Deal_price
+  Sum
+  sneakers_price
+  delivery_fee
+  end
+```
+
+### 7.2. `deal price` with additional conditions
+Now things are getting more complicated. We need to consider the additional conditions. 
+Lets take a closer look at wordings in Additional Conditions column of the [table](#initial-table). 
+Lets repeat out approach and extract elements.
 
 #### 7.2.1 `deal price` with additional conditions Store 1
 > Store 1:  
 > Free delivery for cart sums over $105.26$ USD.
 
-Elements are: `cart sum`, `threshold`
+In Store1 case the `delivery fee` is conditional and depends on the `cart sum`.
+Elements are: `cart sum`, `threshold`, `regular delivery fee`
 
 `cart sum` is a variable which depends on products in the cart, their price and quantity. In this case the cart sum is equal to the `sneakers price`. 
-The `threshold` is a constant value: $105.26$.
+The `threshold` is a constant value: $105.26$. `regular delivery fee` is a constant value: $3.16$.
 
-The main formula atays the same:
-> $deal\ price = sneakers\ price + delivery\ fee$
 
-But in case Store1 the `delivery fee` is conditional and depends on the `cart sum`:
 > $delivery\ fee = 0$ if $cart\ sum > threshold$ else $delivery\ fee$
 
-- `cart sum` - variable
-- `threshold` - constant = $105.26$
-- `delivery fee` - constant = $3.16$
+The main formula atays the same:
+
+> $deal\ price = sneakers\ price + delivery\ fee$
+ 
+Lets replace $"delivery\ fee"$ with fromulated special conditions
+
+> $deal\ price = sneakers\ price + ($ `0`$\ if\ cart\ sum > threshold,\ else$ `regular delivery fee`)
+
+To get the `deal price` we need to evaluate the expression in the brackets. Lets call it `delivery discount engine`.
+
+#### 7.2.2. Problem diagrams
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -371,67 +442,173 @@ graph TB
   Deal_price@{shape: card, label: "Deal price"}
   Sum@{shape: diamond, label: " + "}
   Deal_price -->Sum  
-  Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price"} 
+  Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
   
-  delivery_fee -->|which delivery price?|DeliveryDiscount
-  DeliveryDiscount@{shape: diamond, label: "discount engine"}
-  
-  GT@{shape: diamond, label: "<code> 105.26 > cart sum ? yes(1) / no(0)?</code>"}
-  Threshold@{shape: rect, label: "105.26"}
-  DeliveryDiscount -->|YES or NO|GT
-  GT-->Threshold 
-  GT--> cart_sum
-  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "3.16"}
-  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "0"}
-  %%links
+  delivery_fee --> Result
+    GT@{shape: hex, label: "<code>cart sum > 105.26 \n yes(1) / no(0)?</code>"}
+
+    DeliveryFee@{shape: rect, label: "3.16"} -.-|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+
+    Result
+    Result -.- DeliveryFee 
+    Result -.- DeliveryNull 
+  subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+  GT --- cart_sum@{shape: rect, label: "cart sum"} 
   ```
 
----
-
-General diagram
+The whole path looks like this:
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf@{shape: hex, label: "find minimum value function:\n <code>min(list)</code>"}
   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
-  StoreList --> |includes|Store1@{shape: doc}
-  StoreList --> |includes|Store2@{shape: doc}
-  StoreList --> |includes|Store3@{shape: doc}
-  StoreList --> |includes|Store4@{shape: doc}
+  StoreList --> |includes|Store@{shape: doc}
 
-  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
-  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
-  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
-  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
+  Store@{shape: doc} --> |has|store1.deal_price@{shape: card, label: "<code>deal price</code>"}
 
-  Sum2@{shape: diamond, label: " + "}
-  Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
-
-  Sum4@{shape: diamond, label: " + "}
-  Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
+  store1.deal_price@{shape: card, label: "Deal price"}
+  store1.sum@{shape: diamond, label: " + "}
+  store1.deal_price --> store1.sum  
+  store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
+  store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
   
-  
-%% Sum1
-  Sum1@{shape: diamond, label: " + "}
-  Sum1 --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
-  
-  delivery_fee -->|which delivery price?|DeliveryDiscount
-  DeliveryDiscount@{shape: diamond, label: "discount engine"}
-  GT@{shape: diamond, label: "<code> 105.26 > cart sum ? yes(1) / no(0)?</code>"}
-  Threshold@{shape: rect, label: "105.26"}
-  DeliveryDiscount -->|YES or NO|GT
-  GT-->Threshold 
-  GT--> cart_sum
-  DeliveryDiscount --> |YES| DeliveryFee@{shape: rect, label: "3.16"}
-  DeliveryDiscount --> |NO| DeliveryNull@{shape: rect, label: "0"}
+  store1.delivery_fee --> Result
+    GT@{shape: hex, label: "<code>cart sum > 105.26 \n yes(1) / no(0)?</code>"}
 
-  deal_price1-->|delivery conditions|Sum1
-  deal_price2-->|NO conditions|Sum2
-  deal_price4-->|NO conditions|Sum4
+    DeliveryFee@{shape: rect, label: "3.16"} -.-|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+    Result
+    Result -.- DeliveryFee 
+    Result -.- DeliveryNull 
+  subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+GT-->cart_sum@{shape: rect, label: "cart sum"}
 ```
+
+
+ > [!note]
+ > General diagram
+>   ```mermaid
+> %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+> graph TB
+>   decision@{shape: rect, label: "<code>decision</code>"}
+>   decision -->|get best deal store| minf
+>   minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
+>   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+>   StoreList --> |includes|Store1@{shape: doc}
+>   StoreList --> |includes|Store2@{shape: doc}
+>   StoreList --> |includes|Store3@{shape: doc}
+>   StoreList --> |includes|Store4@{shape: doc}
+> 
+>   Store1@{shape: doc} --> |has|store1.deal_price@{shape: card, label: "<code> deal price </code>"}
+>   Store2@{shape: doc} --> |has|Store2.deal_price@{shape: card, label: "<code> deal price </code>"}
+>   Store3@{shape: doc} --> |has|Store3.deal_price@{shape: card, label: "<code>deal price</code>"}
+>   Store4@{shape: doc} --> |has|Store4.deal_price@{shape: card, label: "<code>deal price</code>"}
+> 
+> %% STORE1
+>   store1.sum@{shape: diamond, label: " + "}
+>   store1.deal_price --> store1.sum  
+>   store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
+>   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
+>   store1.delivery_fee --> Result
+>     GT@{shape: hex, label: "<code>cart sum > 105.26 \n yes(1) / no(0)?</code>"}
+>     DeliveryFee@{shape: rect, label: "3.16"} -.-|NO| GT
+>     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+>     Result
+>     Result -.- DeliveryFee 
+>     Result -.- DeliveryNull 
+>   subgraph DeliveryDiscountEngine
+>     direction TB
+>     Result
+>     DeliveryFee
+>     DeliveryNull
+>     GT
+>   end
+> GT-->cart_sum@{shape: rect, label: "cart sum"}
+> 
+> %% STORE2
+> 	Store2.deal_price.sum@{shape: diamond, label: " + "}
+> 	Store2.deal_price.sum --> Store2.sneakers_price@{shape: rect, label: "sneakers price"}
+> 	Store2.deal_price.sum --> Store2.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+> 	Store2.deal_price -->|NO conditions|Store2.deal_price.sum
+> %% STORE4
+> 	Store4.deal_price.sum@{shape: diamond, label: " + "}
+> 	Store4.deal_price.sum --> Store4.sneakers_price@{shape: rect, label: "sneakers price"}
+> 	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+> 	Store4.deal_price -->|NO conditions|Store4.deal_price.sum
+> 
+> ``` 
+
+
+
+
+#### 7.2.3. apply algorithm to Store 1 
+
+- `cart sum` - variable
+- `threshold` - constant = $105.26$
+- `regular delivery fee` - constant = $3.16$
+
+
+We apply the algorithm to the first store. 
+While processing the algorithmic model we build we move the opposite direction -from bottom to the top.
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  Deal_price@{shape: card, label: "Deal price: \n 101.05 "}
+  Sum@{shape: diamond, label: " 97.89 + 3.16"}
+  Deal_price -->Sum  
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price: \n 97.89"} 
+  Sum --> delivery_fee@{shape: rect, label: "delivery fee: \n 3.16"}
+  
+  sneakers_price --> store1.sneakers_price@{shape: rect, label: "97.89"}
+
+  delivery_fee --> Result
+    GT@{shape: hex, label: "<code>97.89 > 105.26 \n yes(1) / no(0)?</code>"}
+
+    DeliveryFee@{shape: rect, label: "3.16"} ===|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} x-.-x |YES|GT
+
+    Result@{shape: rect, label: "result:\n 3.16"}
+    Result === |return| DeliveryFee 
+    Result x-.-x DeliveryNull 
+  subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+  GT --- cart_sum@{shape: rect, label: "cart sum:\n 97.89"} 
+  cart_sum --> store1.sneakers_price
+  subgraph INPUTdata
+    store1.sneakers_price
+  end 
+
+INPUTdata -.->|processing algorithmic instructions and data flow| Deal_price
+
+  ```
+
+When graphing the algorithmic model and its execution we can define the order of operations. 
+It is becoming quite obvious what has to be done first and what can be done later. 
+
+>[!note] general diagram
 
 
 #### 7.2.2 `deal price` with additional conditions Store 2
