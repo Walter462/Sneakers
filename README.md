@@ -291,7 +291,7 @@ graph TB
   Deal_price -->Sum  
   ```
   
-#### 7.1.2. Problem diagrams
+#### 7.1.2. Store2 & Store4 problem diagrams
 
 The whole path looks like this:
   ```mermaid
@@ -347,7 +347,7 @@ The model is applicable to both stores.
 > [!tip]
 > We can see the Store 2 and Store 4 apply the same algorithm to calculate the `deal price`. The only difference is the input data.
 
-#### 7.1.3. apply algorithm to Store2
+#### 7.1.3. Store2 apply algorithm
 
 - sneakers price: $93.68$ USD
 -  delivery fee: $5.26$ USD
@@ -378,7 +378,7 @@ graph TB
   end
 ```
 
-#### 7.1.4. apply algorithm to Store4
+#### 7.1.4. Store4 apply algorithm
 - sneakers price: $100.00$ USD
 -  delivery fee: $0.00$ USD
 - Additional Conditions: None
@@ -411,7 +411,7 @@ Now things are getting more complicated. We need to consider the additional cond
 Lets take a closer look at wordings in Additional Conditions column of the [table](#initial-table). 
 Lets repeat out approach and extract elements.
 
-#### 7.2.1 `deal price` with additional conditions Store 1
+#### 7.2.1 Store 1 delivery discount
 > Store 1:  
 > Free delivery for cart sums over $105.26$ USD.
 
@@ -432,9 +432,9 @@ Lets replace $"delivery\ fee"$ with fromulated special conditions
 
 > $deal\ price = sneakers\ price + ($ `0`$\ if\ cart\ sum > threshold,\ else$ `regular delivery fee`)
 
-To get the `deal price` we need to evaluate the expression in the brackets. Lets call it `delivery discount engine`.
+To get the `deal price` we need to evaluate the expression in the brackets. Lets call it Delivery Discount Engine`.
 
-#### 7.2.2. Problem diagrams
+#### 7.2.2. Store1 problem diagrams
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -446,14 +446,15 @@ graph TB
   Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
   
   delivery_fee --> Result
-    GT@{shape: hex, label: "<code>cart sum > 105.26 \n yes(1) / no(0)?</code>"}
+    GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
 
-    DeliveryFee@{shape: rect, label: "3.16"} -.-|NO| GT
+    DeliveryFee@{shape: rect, label: "<code>regular delivery fee</code>"} -.-|NO| GT
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
 
     Result
     Result -.- DeliveryFee 
     Result -.- DeliveryNull 
+
   subgraph DeliveryDiscountEngine
     direction TB
     Result
@@ -461,7 +462,9 @@ graph TB
     DeliveryNull
     GT
   end
-  GT --- cart_sum@{shape: rect, label: "cart sum"} 
+
+  GT --- cart_sum@{shape: rect, label: "cart sum"}
+
   ```
 
 The whole path looks like this:
@@ -484,9 +487,9 @@ graph TB
   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
   
   store1.delivery_fee --> Result
-    GT@{shape: hex, label: "<code>cart sum > 105.26 \n yes(1) / no(0)?</code>"}
+    GT@{shape: hex, label: "<code>cart sum > threshold\n yes(1) / no(0)?</code>"}
 
-    DeliveryFee@{shape: rect, label: "3.16"} -.-|NO| GT
+    DeliveryFee@{shape: rect, label: "<code>regular delivery fee</code>"} -.-|NO| GT
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
     Result
     Result -.- DeliveryFee 
@@ -499,6 +502,7 @@ graph TB
     GT
   end
 GT-->cart_sum@{shape: rect, label: "cart sum"}
+
 ```
 
 
@@ -527,8 +531,8 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 >   store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
 >   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
 >   store1.delivery_fee --> Result
->     GT@{shape: hex, label: "<code>cart sum > 105.26 \n yes(1) / no(0)?</code>"}
->     DeliveryFee@{shape: rect, label: "3.16"} -.-|NO| GT
+>     GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
+>     DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
 >     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
 >     Result
 >     Result -.- DeliveryFee 
@@ -552,13 +556,12 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 > 	Store4.deal_price.sum --> Store4.sneakers_price@{shape: rect, label: "sneakers price"}
 > 	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
 > 	Store4.deal_price -->|NO conditions|Store4.deal_price.sum
-> 
 > ``` 
 
 
 
 
-#### 7.2.3. apply algorithm to Store 1 
+#### 7.2.3. Store1 apply algorithm
 
 - `cart sum` - variable
 - `threshold` - constant = $105.26$
@@ -582,7 +585,7 @@ graph TB
   delivery_fee --> Result
     GT@{shape: hex, label: "<code>97.89 > 105.26 \n yes(1) / no(0)?</code>"}
 
-    DeliveryFee@{shape: rect, label: "3.16"} ===|NO| GT
+    DeliveryFee@{shape: rect, label: "regular delivery fee: \n 3.16"} ===|NO| GT
     DeliveryNull@{shape: rect, label: "0"} x-.-x |YES|GT
 
     Result@{shape: rect, label: "result:\n 3.16"}
@@ -611,8 +614,282 @@ It is becoming quite obvious what has to be done first and what can be done late
 >[!note] general diagram
 
 
-#### 7.2.2 `deal price` with additional conditions Store 2
+#### 7.2.4 Store3 first order discount
 > Store 3:   
 > Discount of $10.53$ USD on the first order.
 
-Elements are: `discount`, `first order`
+
+In Store3 case the `deal price` depends on the first order discount condition.
+Elements are: `discount value`, `first order`.
+
+`first order` is a boolean variable which is `true` if the order is the first one and `false` otherwise.
+
+The main formula stays the same. We add first order discount condition to it.
+
+> $deal\ price = (sneakers\ price + delivery\ fee) - ($`discount value` if `first order == 1`, else `0`)
+ 
+
+
+#### 7.2.5 Store3 problem diagrams
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  store3.deal_price@{shape: card, label: "<code> deal price </code>"}
+  store3@{shape: doc} --> |has|store3.deal_price
+
+%% ============================================================Store3 start============================================================
+
+  store3.First_Order_Discount_Engine.result@{label: "result"}
+  store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
+  store3.order_sum@{label: "order sum"} 
+  store3.sum@{shape: diamond, label: " + "}
+
+  store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
+  store3.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value"}
+  store3.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
+  store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
+
+  store3.deal_price --> store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
+  store3.order_sum ----> store3.sum  
+  store3.sum --> store3.sneakers_price
+  store3.sum --> store3.delivery_fee
+  store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.eq --> store3.order_count
+  
+subgraph First_Order_Discount_Engine
+  store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.calculation
+  store3.order_sum
+  store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.eq
+end
+
+%% Store3.INPUT DATA 
+subgraph INPUT data
+  store3.sneakers_price@{shape: rect, label: "sneakers price"}
+  store3.delivery_fee@{shape: rect, label: "delivery fee"}
+  store3.order_count@{label: "order count"}
+end
+
+%% ============================================================Store3 end================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+```
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: hex, label: "find minimum value function:\n <code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store3@{shape: doc}
+
+  Store3@{shape: doc} --> |has|store3.deal_price@{shape: card, label: "<code>deal price</code>"}
+
+%% ============================================================Store3 start============================================================
+
+  store3.First_Order_Discount_Engine.result@{label: "result"}
+  store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
+  store3.order_sum@{label: "order sum"} 
+  store3.sum@{shape: diamond, label: " + "}
+
+  store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
+  store3.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value"}
+  store3.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
+  store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
+
+  store3.deal_price --> store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
+  store3.order_sum ----> store3.sum  
+  store3.sum --> store3.sneakers_price
+  store3.sum --> store3.delivery_fee
+  store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.eq --> store3.order_count
+  
+subgraph First_Order_Discount_Engine
+  store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.calculation
+  store3.order_sum
+  store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.eq
+end
+
+%% Store3.INPUT DATA 
+subgraph INPUT data
+  store3.sneakers_price@{shape: rect, label: "sneakers price"}
+  store3.delivery_fee@{shape: rect, label: "delivery fee"}
+  store3.order_count@{label: "order count"}
+end
+
+%% ============================================================Store3 end================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+```
+
+
+  ```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
+
+  Store1@{shape: doc} --> |has|store1.deal_price@{shape: card, label: "<code> deal price </code>"}
+  Store2@{shape: doc} --> |has|Store2.deal_price@{shape: card, label: "<code> deal price </code>"}
+  Store3@{shape: doc} --> |has|Store3.deal_price@{shape: card, label: "<code>deal price</code>"}
+  Store4@{shape: doc} --> |has|Store4.deal_price@{shape: card, label: "<code>deal price</code>"}
+
+%%  ============================================================ STORE1  ============================================================
+  store1.sum@{shape: diamond, label: " + "}
+  store1.deal_price --------->|delivery discount| store1.sum  
+  store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
+  store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
+  store1.delivery_fee --> Result
+    GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
+    DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+    Result
+    Result -.- DeliveryFee 
+    Result -.- DeliveryNull 
+  subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+GT-->cart_sum@{shape: rect, label: "cart sum"}
+
+%%  ============================================================ Store2  ============================================================
+	Store2.deal_price.sum@{shape: diamond, label: " + "}
+	Store2.deal_price --------->|NO conditions|Store2.deal_price.sum
+	Store2.deal_price.sum --> Store2.sneakers_price@{shape: rect, label: "sneakers price"}
+	Store2.deal_price.sum --> Store2.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+
+  %% ============================================================ Store3 ============================================================
+
+  store3.First_Order_Discount_Engine.result@{label: "result"}
+  store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
+  store3.order_sum@{label: "order sum"} 
+  store3.sum@{shape: diamond, label: " + "}
+
+  store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
+  store3.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value"}
+  store3.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
+  store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
+
+  Store3.deal_price --> |order discount| store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
+  store3.order_sum -----> store3.sum  
+  store3.sum --> store3.sneakers_price
+  store3.sum --> store3.delivery_fee
+  store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.eq --> store3.order_count
+  
+subgraph First_Order_Discount_Engine
+  store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.calculation
+  store3.order_sum
+  store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.eq
+end
+
+%% Store3.INPUT DATA 
+%%subgraph INPUT data
+  store3.order_count@{label: "order count"}
+  store3.sneakers_price@{shape: rect, label: "sneakers price"}
+  store3.delivery_fee@{shape: rect, label: "delivery fee"}
+%%end
+
+%%  ============================================================ Store4  ============================================================
+	Store4.deal_price.sum@{shape: diamond, label: " + "}
+	Store4.deal_price --------->|NO conditions|Store4.deal_price.sum
+	Store4.deal_price.sum --> Store4.sneakers_price@{shape: rect, label: "sneakers price"}
+	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+%% ==================================================================================================================================
+subgraph order sum
+  store1.sum 
+  Store2.deal_price.sum
+  store3.sum 
+  Store4.deal_price.sum
+end
+
+``` 
+
+#### 7.2.6 Store3 apply algorithm
+
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  store3.deal_price@{shape: card, label: "<code> deal price </code>"}
+  store3@{shape: doc} --> |has|store3.deal_price
+
+%% ============================================================Store3 start============================================================
+
+  store3.First_Order_Discount_Engine.result@{label: "result:\n 96.84"}
+  store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
+  store3.order_sum@{label: "order sum:\n 107.37"} 
+  store3.sum@{shape: diamond, label: " + "}
+
+  store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply: \n 10.53"}
+  store3.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value:\n 10.53"}
+  store3.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
+  store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
+
+  store3.deal_price --> store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
+  store3.order_sum ----> store3.sum  
+  store3.sum --> store3.sneakers_price
+  store3.sum --> store3.delivery_fee
+  store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount === store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount x-.-x store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.calculation.discount.value === |YES| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.calculation.discount.zero x-.-x |NO| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.eq --> store3.order_count
+  
+subgraph First_Order_Discount_Engine
+  store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.calculation
+  store3.order_sum
+  store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.eq
+end
+
+%% Store3.INPUT DATA 
+subgraph INPUT data
+  store3.sneakers_price@{shape: rect, label: "sneakers price: \n 105.26"}
+  store3.delivery_fee@{shape: rect, label: "delivery fee: \n 2.11"}
+  store3.order_count@{label: "order count: \n 1"}
+end
+
+%% ============================================================Store3 end================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+```
