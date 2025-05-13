@@ -1,5 +1,6 @@
 # Table of Contents
 <a name="toc"></a>
+
 - [Table of Contents](#table-of-contents)
 - [1. Sneakers](#1-sneakers)
 - [2. Problem](#2-problem)
@@ -47,7 +48,7 @@ If you are interested please join my reasoning logic and feel free to criticize 
 # 2. Problem
 [Back to the table of contents](#toc)
 
-Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
+Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online.
 
 Tom found a few websites that sell the sneakers he picked. To decide which store to buy from he made the following table:
 <a name="initial-table"></a>
@@ -88,9 +89,9 @@ The most important element of the problem is the answer itself: a specific store
 ## 4.2. `store list`
 [Back to the table of contents](#toc)
 
-Second element is the store list to pick a store from. 
+Second element is the store list to pick a store from.
 
->[!tip] 
+>[!tip]
 `python list` small bite (skippable section).
 We can store lists inside computer memory using `python` programming language.
 Put comma "`,`" separated items in square "`[ ]`" brackets to create a list: `[item1, item2, item3 ]`.  Use equals `=` to assign a name to a list.
@@ -129,7 +130,7 @@ The `decision` is based on the information about the `store` `deal price`. There
 
 We can make `deal price` element more detailed by adding sub-elements to it but the main point here that no relevant information is lost. To keep it simple we avoid adding more known sub elements at this stage. Moreover the system  can increase in complexity. That means that Tom later can find some other factors impacting the deal price: (transaction fees, delivery insurance etc.). Having such abstraction as `deal price` can help us to handle this new information.
 
-To sum up, we can say that we united 3 columns into one abstraction: **`deal price`**.  
+To sum up, we can say that we united 3 columns into one abstraction: **`deal price`**.
 The Tom's table could look something like this:
 
 <a name="deal-price-abstraction-table"></a>
@@ -173,10 +174,10 @@ The Tom's table could look something like this:
   </tbody>
 </table>
 
-> [!important] 
+> [!important]
 > The `deal price` abstraction simplifies problem solving and can potentially make the algorithm more flexible. Later we can add other `deal price` sub-elements if needed (like transaction fees, delivery insurance etc.).
 
---- 
+---
 
 # 5. Elements: relations
 [Back to the table of contents](#toc)
@@ -186,7 +187,7 @@ For now we got 4 elements:
  - `store list`
  - `store`
  - `deal price`
-  
+
 Now lets take a closer look at elements combinatorics based on the common sense.
 
 ---
@@ -194,7 +195,7 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 ## 5.1. `decision` <-> `store list`
 [Back to the table of contents](#toc)
 
-`decision` is a result of searching the lowest `deal price`  in the `store list`. 
+`decision` is a result of searching the lowest `deal price`  in the `store list`.
 Hence "searching the lowest `deal price`  in the `store list`" is the relationship type between these 2 elements. We recognise a specific algorithm for this relation type: searching minimum value in a list.
 
 Input (algorithms gets a data to work on): `store list`
@@ -231,7 +232,7 @@ graph TB
 
 This diagrams depict that the questions and the data flows are moving into opposite directions. The question approach can help to chunk the problem from bigger to smaller parts instead of applying combinatorics to known data.
 
->[!tip] 
+>[!tip]
 `python list` small bite (skippable section)
 Fortunately `python` has a built-in function `min()`. It can take a list of numbers and return a minimal  value. Put a list name inside round "`( )`" brackets of `min()`: `min(list_name)`.
 
@@ -272,7 +273,7 @@ Minimal price is: 93.68
 ## 5.2 `store list` <-> `store`
 [Back to the table of contents](#toc)
 
-`store list` includes one or more stores. `store` is an element of the `store list`. 
+`store list` includes one or more stores. `store` is an element of the `store list`.
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -325,7 +326,7 @@ We follow top to bottom approach, question driven approach to avoid getting lost
 # 7. `deal price`
 [Back to the table of contents](#toc)
 
-Now we can discuss the `deal price` in detail. As we mentioned before `deal price` is a property of the `store`. The `deal price` data is in 3 columns of the table: Sneakers price, Delivery fee and Additional Conditions. 
+Now we can discuss the `deal price` in detail. As we mentioned before `deal price` is a property of the `store`. The `deal price` data is in 3 columns of the table: Sneakers price, Delivery fee and Additional Conditions.
 We can notice that additional conditions are not applied to each store. That means that `deal price` calculation algorithm can be different for each store.
 
 ## 7.1 `deal price` no additional conditions
@@ -338,7 +339,7 @@ Too keep it simple we start with the stores that have no additional conditions.
 
 > [!note]
 > $deal\ price = sneakers\ price + delivery\ fee$
-  
+
 ### 7.1.2. Store2 & Store4 problem diagrams
 [Back to the table of contents](#toc)
 
@@ -349,7 +350,7 @@ graph TB
   Sum@{shape: diamond, label: "&plus;"}
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"} & delivery_fee@{shape: rect, label: "delivery fee"}
   Deal_price@{shape: card, label: "Deal price"}
-  Deal_price -->Sum  
+  Deal_price -->Sum
   ```
 
 >[!note]
@@ -365,11 +366,11 @@ graph TB
 
   Store@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
 subgraph "<code></code>"
-  direction TB 
+  direction TB
   Sum2@{shape: diamond, label: " + "}
   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
   deal_price2-->|NO conditions|Sum2
-  end 
+  end
 ```
 ---
 
@@ -420,8 +421,8 @@ deal_price4-->|NO conditions|Sum4
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   Deal_price@{shape: card, label: "98.94"}
-  Deal_price -->Sum  
-  
+  Deal_price -->Sum
+
   Sum@{shape: diamond, label: " + "}
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"}
   Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
@@ -433,7 +434,7 @@ graph TB
   store2.delivery_fee
   end
   subgraph Store2 deal price
-  Deal_price 
+  Deal_price
   Sum
   sneakers_price
   delivery_fee
@@ -453,7 +454,7 @@ graph TB
 graph TB
   Deal_price@{shape: card, label: "100.00"}
   Deal_price -->Sum
-  
+
   Sum@{shape: diamond, label: " + "}
   Sum --> sneakers_price@{shape: rect, label: "sneakers price"}
   Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
@@ -474,20 +475,20 @@ graph TB
 ## 7.2. `deal price` with additional conditions
 [Back to the table of contents](#toc)
 
-Now things are getting more complicated. We need to consider the additional conditions. 
-Lets take a closer look at wordings in Additional Conditions column of the [table](#initial-table). 
+Now things are getting more complicated. We need to consider the additional conditions.
+Lets take a closer look at wordings in Additional Conditions column of the [table](#initial-table).
 Lets repeat out approach and extract elements.
 
 ### 7.2.1 Store 1 delivery discount
 [Back to the table of contents](#toc)
 
-> Store 1:  
+> Store 1:
 > Free delivery for cart sums over $105.26$ USD.
 
 In Store1 case the `delivery fee` is conditional and depends on the `cart sum`.
 Elements are: `cart sum`, `threshold`, `regular delivery fee`
 
-`cart sum` is a variable which depends on products in the cart, their price and quantity. In this case the cart sum is equal to the `sneakers price`. 
+`cart sum` is a variable which depends on products in the cart, their price and quantity. In this case the cart sum is equal to the `sneakers price`.
 The `threshold` is a constant value: $105.26$. `regular delivery fee` is a constant value: $3.16$.
 
 
@@ -496,7 +497,7 @@ The `threshold` is a constant value: $105.26$. `regular delivery fee` is a const
 The main formula atays the same:
 
 > $deal\ price = sneakers\ price + delivery\ fee$
- 
+
 Lets replace $"delivery\ fee"$ with fromulated special conditions
 
 > $deal\ price = sneakers\ price + ($ `0`$\ if\ cart\ sum > threshold,\ else$ `regular delivery fee`)
@@ -512,10 +513,10 @@ To get the `deal price` we need to evaluate the expression in the brackets. Lets
 graph TB
   Deal_price@{shape: card, label: "Deal price"}
   Sum@{shape: diamond, label: " + "}
-  Deal_price -->Sum  
-  Sum --> sneakers_price@{shape: rect, label: "sneakers price"} 
+  Deal_price -->Sum
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price"}
   Sum --> delivery_fee@{shape: rect, label: "delivery fee"}
-  
+
   delivery_fee --> Result
     GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
 
@@ -523,8 +524,8 @@ graph TB
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
 
     Result
-    Result -.- DeliveryFee 
-    Result -.- DeliveryNull 
+    Result -.- DeliveryFee
+    Result -.- DeliveryNull
 
   subgraph DeliveryDiscountEngine
     direction TB
@@ -554,18 +555,18 @@ graph TB
 
   store1.deal_price@{shape: card, label: "Deal price"}
   store1.sum@{shape: diamond, label: " + "}
-  store1.deal_price --> store1.sum  
+  store1.deal_price --> store1.sum
   store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
-  
+
   store1.delivery_fee --> Result
     GT@{shape: hex, label: "<code>cart sum > threshold\n yes(1) / no(0)?</code>"}
 
     DeliveryFee@{shape: rect, label: "<code>regular delivery fee</code>"} -.-|NO| GT
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
     Result
-    Result -.- DeliveryFee 
-    Result -.- DeliveryNull 
+    Result -.- DeliveryFee
+    Result -.- DeliveryNull
   subgraph DeliveryDiscountEngine
     direction TB
     Result
@@ -600,7 +601,7 @@ graph TB
 
 %% STORE1
   store1.sum@{shape: diamond, label: " + "}
-  store1.deal_price --> store1.sum  
+  store1.deal_price --> store1.sum
   store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
   store1.delivery_fee --> Result
@@ -608,8 +609,8 @@ graph TB
     DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
     Result
-    Result -.- DeliveryFee 
-    Result -.- DeliveryNull 
+    Result -.- DeliveryFee
+    Result -.- DeliveryNull
   subgraph DeliveryDiscountEngine
     direction TB
     Result
@@ -629,7 +630,7 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 	Store4.deal_price.sum --> Store4.sneakers_price@{shape: rect, label: "sneakers price"}
 	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
 	Store4.deal_price -->|NO conditions|Store4.deal_price.sum
-``` 
+```
 
 ### 7.2.3. Store1 apply algorithm
 [Back to the table of contents](#toc)
@@ -639,7 +640,7 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 - `regular delivery fee` - constant = $3.16$
 
 
-We apply the algorithm to the first store. 
+We apply the algorithm to the first store.
 While processing the algorithmic model we build we move the opposite direction -from bottom to the top.
 
 <a name="delivery-discount-deal-price-store1"> </a>
@@ -648,10 +649,10 @@ While processing the algorithmic model we build we move the opposite direction -
 graph TB
   Deal_price@{shape: card, label: "Deal price: \n 101.05 "}
   Sum@{shape: hex, label: " 97.89 + 3.16"}
-  Deal_price --> Sum  
-  Sum --> sneakers_price@{shape: rect, label: "sneakers price: \n 97.89"} 
+  Deal_price --> Sum
+  Sum --> sneakers_price@{shape: rect, label: "sneakers price: \n 97.89"}
   Sum --> delivery_fee@{shape: rect, label: "delivery fee: \n 3.16"}
-  
+
   sneakers_price --> store1.sneakers_price@{shape: rect, label: "97.89"}
 
   delivery_fee --> Result
@@ -661,8 +662,8 @@ graph TB
     DeliveryNull@{shape: rect, label: "0"} x-.-x |YES|GT
 
     Result@{shape: rect, label: "result:\n 3.16"}
-    Result === |return| DeliveryFee 
-    Result x-.-x DeliveryNull 
+    Result === |return| DeliveryFee
+    Result x-.-x DeliveryNull
   subgraph DeliveryDiscountEngine
     direction TB
     Result
@@ -670,23 +671,23 @@ graph TB
     DeliveryNull
     GT
   end
-  GT --- cart_sum@{shape: rect, label: "cart sum:\n 97.89"} 
+  GT --- cart_sum@{shape: rect, label: "cart sum:\n 97.89"}
   cart_sum --> store1.sneakers_price
   subgraph INPUTdata
     store1.sneakers_price
-  end 
+  end
 INPUTdata -.->|data flow and instruction execution| Deal_price
 ```
 
-When graphing the algorithmic model and its execution we can define the order of operations. 
-It is becoming quite obvious what has to be done first and what can be done later. 
+When graphing the algorithmic model and its execution we can define the order of operations.
+It is becoming quite obvious what has to be done first and what can be done later.
 
 
 ### 7.2.4 Store3 first order discount
 
 [Back to the table of contents](#toc)
 
-> Store 3:   
+> Store 3:
 > Discount of $10.53$ USD on the first order.
 
 
@@ -697,7 +698,7 @@ Elements are: `discount value`, `first order`.
 
 The main formula stays the same. We add first order discount condition to it.
 
-$deal\ price = (sneakers\ price + delivery\ fee) - ($`discount value` if `first order == 1`, else `0`) 
+$deal\ price = (sneakers\ price + delivery\ fee) - ($`discount value` if `first order == 1`, else `0`)
 
 ---
 
@@ -715,7 +716,7 @@ graph TB
 
   store3.First_Order_Discount_Engine.result@{label: "result"}
   store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
-  store3.order_sum@{label: "order sum"} 
+  store3.order_sum@{label: "order sum"}
   store3.sum@{shape: diamond, label: " + "}
 
   store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
@@ -724,9 +725,9 @@ graph TB
   store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
 
   store3.deal_price --> store3.First_Order_Discount_Engine.result
-  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation
   store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
-  store3.order_sum ----> store3.sum  
+  store3.order_sum ----> store3.sum
   store3.sum --> store3.sneakers_price
   store3.sum --> store3.delivery_fee
   store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
@@ -735,7 +736,7 @@ graph TB
   store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.eq --> store3.order_count
-  
+
 subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.result
   store3.First_Order_Discount_Engine.calculation
@@ -746,7 +747,7 @@ subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.eq
 end
 
-%% Store3.INPUT DATA 
+%% Store3.INPUT DATA
 subgraph INPUT data
   store3.sneakers_price@{shape: rect, label: "sneakers price"}
   store3.delivery_fee@{shape: rect, label: "delivery fee"}
@@ -773,7 +774,7 @@ graph TB
 
   store3.First_Order_Discount_Engine.result@{label: "result"}
   store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
-  store3.order_sum@{label: "order sum"} 
+  store3.order_sum@{label: "order sum"}
   store3.sum@{shape: diamond, label: " + "}
 
   store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
@@ -782,9 +783,9 @@ graph TB
   store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
 
   store3.deal_price --> store3.First_Order_Discount_Engine.result
-  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation
   store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
-  store3.order_sum ----> store3.sum  
+  store3.order_sum ----> store3.sum
   store3.sum --> store3.sneakers_price
   store3.sum --> store3.delivery_fee
   store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
@@ -793,7 +794,7 @@ graph TB
   store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.eq --> store3.order_count
-  
+
 subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.result
   store3.First_Order_Discount_Engine.calculation
@@ -804,7 +805,7 @@ subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.eq
 end
 
-%% Store3.INPUT DATA 
+%% Store3.INPUT DATA
 subgraph INPUT data
   store3.sneakers_price@{shape: rect, label: "sneakers price"}
   store3.delivery_fee@{shape: rect, label: "delivery fee"}
@@ -836,7 +837,7 @@ graph TB
 
 %%  ============================================================ STORE1  ============================================================
   store1.sum@{shape: diamond, label: " + "}
-  store1.deal_price --------->|delivery discount| store1.sum  
+  store1.deal_price --------->|delivery discount| store1.sum
   store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
   store1.delivery_fee --> Result
@@ -844,8 +845,8 @@ graph TB
     DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
     Result
-    Result -.- DeliveryFee 
-    Result -.- DeliveryNull 
+    Result -.- DeliveryFee
+    Result -.- DeliveryNull
   subgraph DeliveryDiscountEngine
     direction TB
     Result
@@ -865,7 +866,7 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 
   store3.First_Order_Discount_Engine.result@{label: "result"}
   store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
-  store3.order_sum@{label: "order sum"} 
+  store3.order_sum@{label: "order sum"}
   store3.sum@{shape: diamond, label: " + "}
 
   store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
@@ -874,9 +875,9 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
   store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
 
   Store3.deal_price --> |order discount| store3.First_Order_Discount_Engine.result
-  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation
   store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
-  store3.order_sum -----> store3.sum  
+  store3.order_sum -----> store3.sum
   store3.sum --> store3.sneakers_price
   store3.sum --> store3.delivery_fee
   store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
@@ -885,7 +886,7 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
   store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.eq --> store3.order_count
-  
+
 subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.result
   store3.First_Order_Discount_Engine.calculation
@@ -896,7 +897,7 @@ subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.eq
 end
 
-%% Store3.INPUT DATA 
+%% Store3.INPUT DATA
 %%subgraph INPUT data
   store3.order_count@{label: "order count"}
   store3.sneakers_price@{shape: rect, label: "sneakers price"}
@@ -910,12 +911,12 @@ end
 	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
 %% ==================================================================================================================================
 subgraph order sum
-  store1.sum 
+  store1.sum
   Store2.deal_price.sum
-  store3.sum 
+  store3.sum
   Store4.deal_price.sum
 end
-``` 
+```
 
 ### 7.2.6 Store3 apply algorithm
 [Back to the table of contents](#toc)
@@ -941,9 +942,9 @@ graph TB
   store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
 
   store3.deal_price --> store3.First_Order_Discount_Engine.result
-  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation
   store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
-  store3.order_sum ----> store3.sum  
+  store3.order_sum ----> store3.sum
   store3.sum ---> store3.sneakers_price
   store3.sum ---> store3.delivery_fee
   store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
@@ -952,7 +953,7 @@ graph TB
   store3.First_Order_Discount_Engine.calculation.discount.value === |YES| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.calculation.discount.zero x-.-x |NO| store3.First_Order_Discount_Engine.eq
   store3.First_Order_Discount_Engine.eq --> store3.order_count
-  
+
 subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.result
   store3.First_Order_Discount_Engine.calculation
@@ -963,7 +964,7 @@ subgraph First_Order_Discount_Engine
   store3.First_Order_Discount_Engine.eq
 end
 
-%% Store3.INPUT DATA 
+%% Store3.INPUT DATA
 subgraph INPUTdata
   store3.sneakers_price@{shape: rect, label: "sneakers price: \n 105.26"}
   store3.delivery_fee@{shape: rect, label: "delivery fee: \n 2.11"}
@@ -991,7 +992,7 @@ By applying this algorithms to corresponding stores we can get the deal prices.
 - [Store4](#non-conditional-deal-price-store4): $100.00$
 
 
-By applying this algorithms we can get the correct answer to the problem. 
+By applying this algorithms we can get the correct answer to the problem.
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -1017,5 +1018,3 @@ graph TB
 
 # 9. `deal price` algorithmic patterns
 [Back to the table of contents](#toc)
-
-
