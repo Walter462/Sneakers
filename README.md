@@ -1,10 +1,6 @@
-
 # Table of Contents
-
-# Table of Contents
-
+<a name="toc"></a>
 - [Table of Contents](#table-of-contents)
-- [Table of Contents](#table-of-contents-1)
 - [1. Sneakers](#1-sneakers)
 - [2. Problem](#2-problem)
 - [3. Categorise the problem](#3-categorise-the-problem)
@@ -36,7 +32,7 @@
 
 
 # 1. Sneakers
-
+[Back to the table of contents](#toc)
 This is a  README for the mock project "Sneakers".
 I am still learning and focus on develop the following skills:
 - problem solving
@@ -47,7 +43,9 @@ I am still learning and focus on develop the following skills:
 
 If you are interested please join my reasoning logic and feel free to criticize it.
 
+
 # 2. Problem
+[Back to the table of contents](#toc)
 
 Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
 
@@ -62,6 +60,7 @@ Tom found a few websites that sell the sneakers he picked. To decide which store
 
 
 # 3. Categorise the problem
+[Back to the table of contents](#toc)
 
 Tom needs to decide which store to buy from. Assuming that the quality of the sneakers is the same, the `decision` problem is to choose the store with the lowest expenses (best `deal price`).
 
@@ -70,6 +69,8 @@ Lets take a brief look at the table.
 ---
 
 # 4. Elements: extract
+[Back to the table of contents](#toc)
+
 `decision`, `store list`, `store`, `deal price`
 
 
@@ -78,13 +79,14 @@ Tom's table represents a `store list` helping to make a `decision` to pick a `st
 ---
 
 ## 4.1. `decision`
-
+[Back to the table of contents](#toc)
 
 The most important element of the problem is the answer itself: a specific store, `decision` to be made.
 
 ---
 
 ## 4.2. `store list`
+[Back to the table of contents](#toc)
 
 Second element is the store list to pick a store from. 
 
@@ -111,11 +113,15 @@ result:
 ---
 
 ## 4.3. `store`
+[Back to the table of contents](#toc)
+
 Store list consists of individual stores. It is the first Tom's table column.
 
 ---
 
 ## 4.4. `deal price`
+[Back to the table of contents](#toc)
+
 The `decision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
 - sneakers price
 - delivery fee
@@ -173,6 +179,8 @@ The Tom's table could look something like this:
 --- 
 
 # 5. Elements: relations
+[Back to the table of contents](#toc)
+
 For now we got 4 elements:
  - `decision`
  - `store list`
@@ -184,6 +192,8 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 ---
 
 ## 5.1. `decision` <-> `store list`
+[Back to the table of contents](#toc)
+
 `decision` is a result of searching the lowest `deal price`  in the `store list`. 
 Hence "searching the lowest `deal price`  in the `store list`" is the relationship type between these 2 elements. We recognise a specific algorithm for this relation type: searching minimum value in a list.
 
@@ -260,6 +270,7 @@ Minimal price is: 93.68
 ---
 
 ## 5.2 `store list` <-> `store`
+[Back to the table of contents](#toc)
 
 `store list` includes one or more stores. `store` is an element of the `store list`. 
 
@@ -275,6 +286,8 @@ graph TB
 
 ---
 ## 5.3 `store` <-> `deal price`
+[Back to the table of contents](#toc)
+
 `deal price` is a property of the `store`
 
 ```mermaid
@@ -284,6 +297,7 @@ graph TB
 ```
 
 # 6. Elements: diagram
+[Back to the table of contents](#toc)
 
 Considering the problem elements and their relationships we can draw the following diagram:
 
@@ -309,17 +323,25 @@ graph TB
 We follow top to bottom approach, question driven approach to avoid getting lost into pricing details and other distractions.
 
 # 7. `deal price`
+[Back to the table of contents](#toc)
+
 Now we can discuss the `deal price` in detail. As we mentioned before `deal price` is a property of the `store`. The `deal price` data is in 3 columns of the table: Sneakers price, Delivery fee and Additional Conditions. 
 We can notice that additional conditions are not applied to each store. That means that `deal price` calculation algorithm can be different for each store.
 
 ## 7.1 `deal price` no additional conditions
+[Back to the table of contents](#toc)
+
 ### 7.1.1. `deal price` no additional conditions algorithm
+[Back to the table of contents](#toc)
+
 Too keep it simple we start with the stores that have no additional conditions.
 
 > [!note]
 > $deal\ price = sneakers\ price + delivery\ fee$
   
 ### 7.1.2. Store2 & Store4 problem diagrams
+[Back to the table of contents](#toc)
+
 <a name="non-conditional-deal-price"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -387,6 +409,7 @@ deal_price4-->|NO conditions|Sum4
 > We can see the Store 2 and Store 4 apply the same algorithm to calculate the `deal price`. The only difference is the input data.
 
 ### 7.1.3. Store2 apply algorithm
+[Back to the table of contents](#toc)
 
 - sneakers price: $93.68$ USD
 -  delivery fee: $5.26$ USD
@@ -418,6 +441,8 @@ graph TB
 ```
 
 ### 7.1.4. Store4 apply algorithm
+[Back to the table of contents](#toc)
+
 - sneakers price: $100.00$ USD
 -  delivery fee: $0.00$ USD
 - Additional Conditions: None
@@ -447,11 +472,15 @@ graph TB
 ```
 
 ## 7.2. `deal price` with additional conditions
+[Back to the table of contents](#toc)
+
 Now things are getting more complicated. We need to consider the additional conditions. 
 Lets take a closer look at wordings in Additional Conditions column of the [table](#initial-table). 
 Lets repeat out approach and extract elements.
 
 ### 7.2.1 Store 1 delivery discount
+[Back to the table of contents](#toc)
+
 > Store 1:  
 > Free delivery for cart sums over $105.26$ USD.
 
@@ -475,6 +504,7 @@ Lets replace $"delivery\ fee"$ with fromulated special conditions
 To get the `deal price` we need to evaluate the expression in the brackets. Lets call it Delivery Discount Engine`.
 
 ### 7.2.2. Store1 problem diagrams
+[Back to the table of contents](#toc)
 
 <a name="delivery-discount-deal-price"></a>
 ```mermaid
@@ -602,6 +632,7 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 ``` 
 
 ### 7.2.3. Store1 apply algorithm
+[Back to the table of contents](#toc)
 
 - `cart sum` - variable
 - `threshold` - constant = $105.26$
@@ -652,6 +683,9 @@ It is becoming quite obvious what has to be done first and what can be done late
 
 
 ### 7.2.4 Store3 first order discount
+
+[Back to the table of contents](#toc)
+
 > Store 3:   
 > Discount of $10.53$ USD on the first order.
 
@@ -668,6 +702,7 @@ $deal\ price = (sneakers\ price + delivery\ fee) - ($`discount value` if `first 
 ---
 
 ### 7.2.5. Store3 problem diagrams
+[Back to the table of contents](#toc)
 
 <a name="first-order-discount-deal-price"></a>
 ```mermaid
@@ -883,6 +918,8 @@ end
 ``` 
 
 ### 7.2.6 Store3 apply algorithm
+[Back to the table of contents](#toc)
+
 
 <a name="first-order-discount-deal-price-store3"></a>
 ```mermaid
@@ -939,6 +976,7 @@ INPUTdata -.-> |data flow and instructions execution| store3.deal_price
 ```
 
 # 8. Working out the solution
+[Back to the table of contents](#toc)
 
 The analysis shows that we got 3 different algorithms to calculate the `deal price`.
 - No discount [Store2 and Store4](#non-conditional-deal-price)
@@ -978,4 +1016,6 @@ graph TB
 
 
 # 9. `deal price` algorithmic patterns
+[Back to the table of contents](#toc)
+
 
