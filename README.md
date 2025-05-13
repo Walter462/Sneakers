@@ -1,6 +1,6 @@
 # 1. Sneakers
 
-This is a  README for the educational problem project "Sneakers".
+This is a  README for the mock project "Sneakers".
 I am still learning and focus on develop the following skills:
 - problem solving
 - logical reasoning
@@ -10,7 +10,7 @@ I am still learning and focus on develop the following skills:
 
 If you are interested please join my reasoning logic and feel free to criticize it.
 
-## 2. Problem
+# 2. Problem
 
 Tom wants to buy a pair of new sneakers. He went to a nearby store and tried a few pairs of different brands. He picked a specific pair of sneakers that he liked. Considering the offline store price Tom decided to check if he could save some money by ordering them online. 
 
@@ -24,7 +24,7 @@ Tom found a few websites that sell the sneakers he picked. To decide which store
 | Store 4 | $100.00$            | Free              | None                                          |
 
 
-## 3. Categorise the problem
+# 3. Categorise the problem
 
 Tom needs to decide which store to buy from. Assuming that the quality of the sneakers is the same, the `decision` problem is to choose the store with the lowest expenses (best `deal price`).
 
@@ -32,7 +32,7 @@ Lets take a brief look at the table.
 
 ---
 
-## 4. Elements: extract
+# 4. Elements: extract
 `decision`, `store list`, `store`, `deal price`
 
 
@@ -40,14 +40,14 @@ Tom's table represents a `store list` helping to make a `decision` to pick a `st
 
 ---
 
-### 4.1. `decision`
+## 4.1. `decision`
 
 
 The most important element of the problem is the answer itself: a specific store, `decision` to be made.
 
 ---
 
-### 4.2. `store list`
+## 4.2. `store list`
 
 Second element is the store list to pick a store from. 
 
@@ -73,12 +73,12 @@ result:
 
 ---
 
-### 4.3. `store`
+## 4.3. `store`
 Store list consists of individual stores. It is the first Tom's table column.
 
 ---
 
-### 4.4. `deal price`
+## 4.4. `deal price`
 The `decision` is based on the information about the `store` `deal price`. There is no such information as `deal price` in the Tom's table but we understand that the other 3 columns provide us with essential information related to the `deal price`:
 - sneakers price
 - delivery fee
@@ -135,7 +135,7 @@ The Tom's table could look something like this:
 
 --- 
 
-## 5. Elements: relations
+# 5. Elements: relations
 For now we got 4 elements:
  - `decision`
  - `store list`
@@ -146,7 +146,7 @@ Now lets take a closer look at elements combinatorics based on the common sense.
 
 ---
 
-### 5.1. `decision` <-> `store list`
+## 5.1. `decision` <-> `store list`
 `decision` is a result of searching the lowest `deal price`  in the `store list`. 
 Hence "searching the lowest `deal price`  in the `store list`" is the relationship type between these 2 elements. We recognise a specific algorithm for this relation type: searching minimum value in a list.
 
@@ -160,7 +160,7 @@ Output (algorithm returns a value): `decision`
 >%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 >graph LR
 >	in@{label: "INPUT: \n <code>list=[item1, item2, item3]</code>"}
->	fn@{shape: diamond, label: "ALGO\n Find minimum value\n algorithm:\n <code>min(list)</code>"}
+>	fn@{shape: hex, label: "ALGO\n Find minimum value\n algorithm:\n <code>min(list)</code>"}
 >	out@{label: "OUTPUT: \n <code>item</code> "}
 >	in --> fn --> out
 >```
@@ -177,7 +177,7 @@ This is recursive style of thinking.
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|which one is the best deal store?| minf
-  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf@{shape: hex, label: "find minimum value function:\n<code>min(list)</code>"}
   minf -->|which list to apply to?| StoreList@{shape: docs, label: "<code>store list</code>"}
 ```
 ---
@@ -222,7 +222,7 @@ Minimal price is: 93.68
 
 ---
 
-### 5.2 `store list` <-> `store`
+## 5.2 `store list` <-> `store`
 
 `store list` includes one or more stores. `store` is an element of the `store list`. 
 
@@ -237,7 +237,7 @@ graph TB
 ```
 
 ---
-### 5.3 `store` <-> `deal price`
+## 5.3 `store` <-> `deal price`
 `deal price` is a property of the `store`
 
 ```mermaid
@@ -246,7 +246,7 @@ graph TB
   Store@{shape: doc} --> |has|deal_price@{shape: card}
 ```
 
-## 6. Elements: diagram
+# 6. Elements: diagram
 
 Considering the problem elements and their relationships we can draw the following diagram:
 
@@ -256,7 +256,7 @@ Considering the problem elements and their relationships we can draw the followi
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n<code>min(list)</code>"}
+  minf@{shape: hex, label: "find minimum value function:\n<code>min(list)</code>"}
   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
   StoreList --> |includes|Store1@{shape: doc}
   StoreList --> |includes|Store2@{shape: doc}
@@ -271,17 +271,19 @@ graph TB
 
 We follow top to bottom approach, question driven approach to avoid getting lost into pricing details and other distractions.
 
-## 7. `deal price`
-Now we can discuss the `deal price` in detail. As we metioned before `deal price` is a property of the `store`. The `deal price` data is in 3 columns of the table: Sneakers price, Delivery fee and Additional Conditions. 
-We can notice that additional conditions are not applied to each store.
+# 7. `deal price`
+Now we can discuss the `deal price` in detail. As we mentioned before `deal price` is a property of the `store`. The `deal price` data is in 3 columns of the table: Sneakers price, Delivery fee and Additional Conditions. 
+We can notice that additional conditions are not applied to each store. That means that `deal price` calculation algorithm can be different for each store.
 
-### 7.1 `deal price` no additional conditions
-#### 7.1.1. `deal price` no additional conditions algorithm
+## 7.1 `deal price` no additional conditions
+### 7.1.1. `deal price` no additional conditions algorithm
 Too keep it simple we start with the stores that have no additional conditions.
 
 > [!note]
 > $deal\ price = sneakers\ price + delivery\ fee$
-
+  
+### 7.1.2. Store2 & Store4 problem diagrams
+<a name="non-conditional-deal-price"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -290,16 +292,15 @@ graph TB
   Deal_price@{shape: card, label: "Deal price"}
   Deal_price -->Sum  
   ```
-  
-#### 7.1.2. Store2 & Store4 problem diagrams
 
-The whole path looks like this:
+>[!note]
+> The whole path looks like this:
   ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
+  minf@{shape: hex, label: "find minimum value function:\n <code>min(list)</code>"}
   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
   StoreList --> |includes|Store@{shape: doc}
 
@@ -318,42 +319,43 @@ Stores 2 and 4 has no extra no conditions.
 The model is applicable to both stores.
 >[!note]
 > General model looks like this:
->```mermaid
-> %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
-> graph TB
->   decision@{shape: rect, label: "<code>decision</code>"}
->   decision -->|get best deal store| minf
->   minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
->   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
->   StoreList --> |includes|Store1@{shape: doc}
->   StoreList --> |includes|Store2@{shape: doc}
->   StoreList --> |includes|Store3@{shape: doc}
->   StoreList --> |includes|Store4@{shape: doc}
-> 
->   Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
->   Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
->   Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
->   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
-> 
->   Sum2@{shape: diamond, label: " + "}
->   Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
-> 
->   Sum4@{shape: diamond, label: " + "}
->   Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
-> deal_price2-->|NO conditions|Sum2
-> deal_price4-->|NO conditions|Sum4
-> ```
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: hex, label: "find minimum value function:\n <code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
+
+  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>"}
+  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>"}
+  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>"}
+  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>"}
+
+  Sum2@{shape: diamond, label: " + "}
+  Sum2 --> sneakers_price1@{shape: rect, label: "sneakers price"} & delivery_fee1@{shape: rect, label: "delivery fee"}
+
+  Sum4@{shape: diamond, label: " + "}
+  Sum4 --> sneakers_price4@{shape: rect, label: "sneakers price"} & delivery_fee4@{shape: rect, label: "delivery fee"}
+deal_price2-->|NO conditions|Sum2
+deal_price4-->|NO conditions|Sum4
+```
+
 
 > [!tip]
 > We can see the Store 2 and Store 4 apply the same algorithm to calculate the `deal price`. The only difference is the input data.
 
-#### 7.1.3. Store2 apply algorithm
+### 7.1.3. Store2 apply algorithm
 
 - sneakers price: $93.68$ USD
 -  delivery fee: $5.26$ USD
 - Additional Conditions: None
 
-
+<a name="non-conditional-deal-price-store2"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -378,11 +380,12 @@ graph TB
   end
 ```
 
-#### 7.1.4. Store4 apply algorithm
+### 7.1.4. Store4 apply algorithm
 - sneakers price: $100.00$ USD
 -  delivery fee: $0.00$ USD
 - Additional Conditions: None
 
+<a name="non-conditional-deal-price-store4"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -406,12 +409,12 @@ graph TB
   end
 ```
 
-### 7.2. `deal price` with additional conditions
+## 7.2. `deal price` with additional conditions
 Now things are getting more complicated. We need to consider the additional conditions. 
 Lets take a closer look at wordings in Additional Conditions column of the [table](#initial-table). 
 Lets repeat out approach and extract elements.
 
-#### 7.2.1 Store 1 delivery discount
+### 7.2.1 Store 1 delivery discount
 > Store 1:  
 > Free delivery for cart sums over $105.26$ USD.
 
@@ -434,8 +437,9 @@ Lets replace $"delivery\ fee"$ with fromulated special conditions
 
 To get the `deal price` we need to evaluate the expression in the brackets. Lets call it Delivery Discount Engine`.
 
-#### 7.2.2. Store1 problem diagrams
+### 7.2.2. Store1 problem diagrams
 
+<a name="delivery-discount-deal-price"></a
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -467,7 +471,8 @@ graph TB
 
   ```
 
-The whole path looks like this:
+ > [!note]
+ > The whole path looks like this:
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -508,60 +513,58 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 
  > [!note]
  > General diagram
->   ```mermaid
-> %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
-> graph TB
->   decision@{shape: rect, label: "<code>decision</code>"}
->   decision -->|get best deal store| minf
->   minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
->   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
->   StoreList --> |includes|Store1@{shape: doc}
->   StoreList --> |includes|Store2@{shape: doc}
->   StoreList --> |includes|Store3@{shape: doc}
->   StoreList --> |includes|Store4@{shape: doc}
-> 
->   Store1@{shape: doc} --> |has|store1.deal_price@{shape: card, label: "<code> deal price </code>"}
->   Store2@{shape: doc} --> |has|Store2.deal_price@{shape: card, label: "<code> deal price </code>"}
->   Store3@{shape: doc} --> |has|Store3.deal_price@{shape: card, label: "<code>deal price</code>"}
->   Store4@{shape: doc} --> |has|Store4.deal_price@{shape: card, label: "<code>deal price</code>"}
-> 
-> %% STORE1
->   store1.sum@{shape: diamond, label: " + "}
->   store1.deal_price --> store1.sum  
->   store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
->   store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
->   store1.delivery_fee --> Result
->     GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
->     DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
->     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
->     Result
->     Result -.- DeliveryFee 
->     Result -.- DeliveryNull 
->   subgraph DeliveryDiscountEngine
->     direction TB
->     Result
->     DeliveryFee
->     DeliveryNull
->     GT
->   end
-> GT-->cart_sum@{shape: rect, label: "cart sum"}
-> 
-> %% STORE2
-> 	Store2.deal_price.sum@{shape: diamond, label: " + "}
-> 	Store2.deal_price.sum --> Store2.sneakers_price@{shape: rect, label: "sneakers price"}
-> 	Store2.deal_price.sum --> Store2.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
-> 	Store2.deal_price -->|NO conditions|Store2.deal_price.sum
-> %% STORE4
-> 	Store4.deal_price.sum@{shape: diamond, label: " + "}
-> 	Store4.deal_price.sum --> Store4.sneakers_price@{shape: rect, label: "sneakers price"}
-> 	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
-> 	Store4.deal_price -->|NO conditions|Store4.deal_price.sum
-> ``` 
 
+  ```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: hex, label: "find minimum value function:\n <code>min(list)</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
+  StoreList --> |includes|Store1@{shape: doc}
+  StoreList --> |includes|Store2@{shape: doc}
+  StoreList --> |includes|Store3@{shape: doc}
+  StoreList --> |includes|Store4@{shape: doc}
 
+  Store1@{shape: doc} --> |has|store1.deal_price@{shape: card, label: "<code> deal price </code>"}
+  Store2@{shape: doc} --> |has|Store2.deal_price@{shape: card, label: "<code> deal price </code>"}
+  Store3@{shape: doc} --> |has|Store3.deal_price@{shape: card, label: "<code>deal price</code>"}
+  Store4@{shape: doc} --> |has|Store4.deal_price@{shape: card, label: "<code>deal price</code>"}
 
+%% STORE1
+  store1.sum@{shape: diamond, label: " + "}
+  store1.deal_price --> store1.sum  
+  store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
+  store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
+  store1.delivery_fee --> Result
+    GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
+    DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+    Result
+    Result -.- DeliveryFee 
+    Result -.- DeliveryNull 
+  subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+GT-->cart_sum@{shape: rect, label: "cart sum"}
 
-#### 7.2.3. Store1 apply algorithm
+%% STORE2
+	Store2.deal_price.sum@{shape: diamond, label: " + "}
+	Store2.deal_price.sum --> Store2.sneakers_price@{shape: rect, label: "sneakers price"}
+	Store2.deal_price.sum --> Store2.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+	Store2.deal_price -->|NO conditions|Store2.deal_price.sum
+%% STORE4
+	Store4.deal_price.sum@{shape: diamond, label: " + "}
+	Store4.deal_price.sum --> Store4.sneakers_price@{shape: rect, label: "sneakers price"}
+	Store4.deal_price.sum --> Store4.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+	Store4.deal_price -->|NO conditions|Store4.deal_price.sum
+``` 
+
+### 7.2.3. Store1 apply algorithm
 
 - `cart sum` - variable
 - `threshold` - constant = $105.26$
@@ -571,12 +574,13 @@ GT-->cart_sum@{shape: rect, label: "cart sum"}
 We apply the algorithm to the first store. 
 While processing the algorithmic model we build we move the opposite direction -from bottom to the top.
 
+<a name="delivery-discount-deal-price-store1"> </a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   Deal_price@{shape: card, label: "Deal price: \n 101.05 "}
-  Sum@{shape: diamond, label: " 97.89 + 3.16"}
-  Deal_price -->Sum  
+  Sum@{shape: hex, label: " 97.89 + 3.16"}
+  Deal_price --> Sum  
   Sum --> sneakers_price@{shape: rect, label: "sneakers price: \n 97.89"} 
   Sum --> delivery_fee@{shape: rect, label: "delivery fee: \n 3.16"}
   
@@ -603,18 +607,14 @@ graph TB
   subgraph INPUTdata
     store1.sneakers_price
   end 
-
-INPUTdata -.->|processing algorithmic instructions and data flow| Deal_price
-
-  ```
+INPUTdata -.->|data flow and instruction execution| Deal_price
+```
 
 When graphing the algorithmic model and its execution we can define the order of operations. 
 It is becoming quite obvious what has to be done first and what can be done later. 
 
->[!note] general diagram
 
-
-#### 7.2.4 Store3 first order discount
+### 7.2.4 Store3 first order discount
 > Store 3:   
 > Discount of $10.53$ USD on the first order.
 
@@ -626,11 +626,13 @@ Elements are: `discount value`, `first order`.
 
 The main formula stays the same. We add first order discount condition to it.
 
-> $deal\ price = (sneakers\ price + delivery\ fee) - ($`discount value` if `first order == 1`, else `0`)
- 
+$deal\ price = (sneakers\ price + delivery\ fee) - ($`discount value` if `first order == 1`, else `0`) 
 
+---
 
-#### 7.2.5 Store3 problem diagrams
+### 7.2.5. Store3 problem diagrams
+
+<a name="first-order-discount-deal-price"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -679,8 +681,10 @@ subgraph INPUT data
   store3.order_count@{label: "order count"}
 end
 
-%% ============================================================Store3 end================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+%% ===============================Store3 end=================
 ```
+ > [!note]
+ > General diagram
 
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
@@ -693,7 +697,7 @@ graph TB
 
   Store3@{shape: doc} --> |has|store3.deal_price@{shape: card, label: "<code>deal price</code>"}
 
-%% ============================================================Store3 start============================================================
+%% ================================================ Store3 start===========================================================+
 
   store3.First_Order_Discount_Engine.result@{label: "result"}
   store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
@@ -735,16 +739,18 @@ subgraph INPUT data
   store3.order_count@{label: "order count"}
 end
 
-%% ============================================================Store3 end================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+%% ============================================================ Store3 end =================================================
 ```
 
+ > [!note]
+ > General diagram
 
   ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   decision@{shape: rect, label: "<code>decision</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: diamond, label: "find minimum value function:\n <code>min(list)</code>"}
+  minf@{shape: hex, label: "find minimum value function:\n <code>min(list)</code>"}
   minf -->|apply to| StoreList@{shape: docs, label: "<code>store list</code>"}
   StoreList --> |includes|Store1@{shape: doc}
   StoreList --> |includes|Store2@{shape: doc}
@@ -837,23 +843,22 @@ subgraph order sum
   store3.sum 
   Store4.deal_price.sum
 end
-
 ``` 
 
-#### 7.2.6 Store3 apply algorithm
+### 7.2.6 Store3 apply algorithm
 
-
+<a name="first-order-discount-deal-price-store3"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
   store3.deal_price@{shape: card, label: "<code> deal price </code>"}
   store3@{shape: doc} --> |has|store3.deal_price
 
-%% ============================================================Store3 start============================================================
+%% ======================================================== Store3 start ===================================================
 
   store3.First_Order_Discount_Engine.result@{label: "result:\n 96.84"}
   store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
-  store3.order_sum@{label: "order sum:\n 107.37"} 
+  store3.order_sum@{label: "order sum:\n 107.37"}
   store3.sum@{shape: diamond, label: " + "}
 
   store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply: \n 10.53"}
@@ -865,8 +870,8 @@ graph TB
   store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation 
   store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
   store3.order_sum ----> store3.sum  
-  store3.sum --> store3.sneakers_price
-  store3.sum --> store3.delivery_fee
+  store3.sum ---> store3.sneakers_price
+  store3.sum ---> store3.delivery_fee
   store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
   store3.First_Order_Discount_Engine.calculation.discount === store3.First_Order_Discount_Engine.calculation.discount.value
   store3.First_Order_Discount_Engine.calculation.discount x-.-x store3.First_Order_Discount_Engine.calculation.discount.zero
@@ -885,11 +890,55 @@ subgraph First_Order_Discount_Engine
 end
 
 %% Store3.INPUT DATA 
-subgraph INPUT data
+subgraph INPUTdata
   store3.sneakers_price@{shape: rect, label: "sneakers price: \n 105.26"}
   store3.delivery_fee@{shape: rect, label: "delivery fee: \n 2.11"}
   store3.order_count@{label: "order count: \n 1"}
 end
 
-%% ============================================================Store3 end================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+INPUTdata -.-> |data flow and instructions execution| store3.deal_price
+
+%% ========================================================= Store3 end================================================
 ```
+
+# 8. Working out the solution
+
+The analysis shows that we got 3 different algorithms to calculate the `deal price`.
+- No discount [Store2 and Store4](#non-conditional-deal-price)
+- Delivery discount [Store1](#delivery-discount-deal-price)
+- First order discount [Store3](#first-order-discount-deal-price)
+
+
+By applying this algorithms to corresponding stores we can get the deal prices.
+- [Store1](#delivery-discount-deal-price-store1): $101.05$
+- [Store2](#non-conditional-deal-price-store2): $98.94$
+- [Store3](#first-order-discount-deal-price-store3): $97.84$
+- [Store4](#non-conditional-deal-price-store4): $100.00$
+
+
+By applying this algorithms we can get the correct answer to the problem. 
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  decision@{shape: rect, label: "<code>decision: \n 97.84</code>"}
+  decision -->|get best deal store| minf
+  minf@{shape: hex, label: "find minimum value function:\n<code>min([101.05, 98.94, 97.84, 100.00])</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list:</code> \n <code>[101.05, 98.94, 97.84, 100.00] </code>"}
+  StoreList --> |includes|Store1@{shape: doc, label: "Store1:\n 101.05"}
+  StoreList --> |includes|Store2@{shape: doc, label: "Store2:\n 98,94"}
+  StoreList --> |includes|Store3@{shape: doc, label: "Store1:\n 97.84"}
+  StoreList --> |includes|Store4@{shape: doc, label: "Store1:\n 100.00"}
+
+  Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>\n 101.05"}
+  Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>\n 98.94"}
+  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>\n 97.84"}
+  Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>\n 100.00"}
+```
+
+>[!tip]
+> the answer to the problem is to buy from Store3.
+
+
+# 9. `deal price` algorithmic patterns
+
