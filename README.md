@@ -756,6 +756,7 @@ end
 
 %% ===============================Store3 end=================
 ```
+
  > [!note]
  > General diagram
 
@@ -818,6 +819,7 @@ end
  > [!note]
  > General diagram
 
+<a name="general-diagram-pre-patterned"></a>
   ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -1013,8 +1015,216 @@ graph TB
 ```
 
 >[!tip]
-> the answer to the problem is to buy from Store3.
+> The answer to the problem is to buy from Store3 with the lowest deal price of $96.84$.
 
 
 # 9. `deal price` algorithmic patterns
 [Back to the table of contents](#toc)
+
+Lets take a closer look at the [last updated version of the General diagram](#general-diagram-pre-patterned).
+
+As we mentioned before, the `deal price` is calculated differently for each store.
+At `deal price` level we have 3 different algorithms:
+
+- [Non conditional](#non-conditional-deal-price)
+- [Delivery discount](#delivery-discount-deal-price)
+- [First order discount](#first-order-discount-deal-price)
+
+Let's take a closer look at them.
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+  store1.deal_price@{shape: card, label: "<code> deal price </code>"}
+  store2.deal_price@{shape: card, label: "<code> deal price </code>"}
+  store3.deal_price@{shape: card, label: "<code>deal price</code>"}
+
+
+%%  ============================================================ STORE1  ============================================================
+  store1.sum@{shape: diamond, label: " + "}
+  store1.deal_price --------->|delivery discount| store1.sum
+  store1.sum --> store1.sneakers_price@{shape: rect, label: "sneakers price"}
+  store1.sum --> store1.delivery_fee@{shape: rect, label: "delivery fee"}
+  store1.delivery_fee --> Result
+    GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
+    DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+    Result
+    Result -.- DeliveryFee
+    Result -.- DeliveryNull
+  subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+GT-->cart_sum@{shape: rect, label: "cart sum"}
+
+%%  ============================================================ store2  ============================================================
+  store2.deal_price.sum@{shape: diamond, label: " + "}
+  store2.deal_price --------->|NO conditions|store2.deal_price.sum
+  store2.deal_price.sum --> store2.sneakers_price@{shape: rect, label: "sneakers price"}
+  store2.deal_price.sum --> store2.deal_price.delivery_fee@{shape: rect, label: "delivery fee"}
+
+  %% ============================================================ store3 ============================================================
+
+  store3.First_Order_Discount_Engine.result@{label: "result"}
+  store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
+  store3.order_sum@{label: "order sum"}
+  store3.sum@{shape: diamond, label: " + "}
+
+  store3.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
+  store3.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value"}
+  store3.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
+  store3.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
+
+  store3.deal_price --> |order discount| store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.result --> store3.First_Order_Discount_Engine.calculation
+  store3.First_Order_Discount_Engine.calculation ---> store3.order_sum
+  store3.order_sum -----> store3.sum
+  store3.sum --> store3.sneakers_price
+  store3.sum --> store3.delivery_fee
+  store3.First_Order_Discount_Engine.calculation ---> store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount -.- store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store3.First_Order_Discount_Engine.eq
+  store3.First_Order_Discount_Engine.eq --> store3.order_count
+
+subgraph First_Order_Discount_Engine
+  store3.First_Order_Discount_Engine.result
+  store3.First_Order_Discount_Engine.calculation
+  store3.order_sum
+  store3.First_Order_Discount_Engine.calculation.discount
+  store3.First_Order_Discount_Engine.calculation.discount.value
+  store3.First_Order_Discount_Engine.calculation.discount.zero
+  store3.First_Order_Discount_Engine.eq
+end
+
+%% store3.INPUT DATA
+%%subgraph INPUT data
+  store3.order_count@{label: "order count"}
+  store3.sneakers_price@{shape: rect, label: "sneakers price"}
+  store3.delivery_fee@{shape: rect, label: "delivery fee"}
+%%end
+
+subgraph order sum
+  store1.sum
+  store2.deal_price.sum
+  store3.sum
+end
+```
+
+There are some patterns that we can identify. 
+
+> [!tip]
+> 1. orded sum parretn is used in all cases: $order\ sum = sneakers\ price + delivery\ fee$
+>
+> 2. `cart sum` term used in Delivery Discount case is also a pattern used in all cases. It is the sum of all product prices in the cart. In our case it is sneakers price as far as Tom is going to buy only one pair of sneakers.
+> 
+>3. We can merge all three patterns into one Resulting into the following order of operations:
+> - 1. Calculate `cart sum`
+> - 2. If applicable: apply Delivery Discount
+> - 3. Calculate `order sum`
+> - 4. If applicable: apply First Order Discount
+
+
+>[!important]
+> This results into universal algorithm to apply in all cases instead of 3 different algorithms for each case.
+>
+> This is the filan goal: to produce a universal algorithm that can be applied to input data to produce the problem solution.
+
+
+
+```mermaid
+%%{ init : { "themeVariables": { "htmlLabels": true }}}%%
+graph TB
+
+store.deal_price@{shape: card, label: "<code> deal price </code>"}
+
+  store.First_Order_Discount_Engine.result@{label: "result"}
+  store.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
+  store.order_sum@{label: "order sum"}
+  store.order_sum@{shape: hex, label: "<code> order sum </code>\n + "}
+  store.cart_sum@{shape: hex, label: "<code> cart sum </code>\n + "}
+  store.product@{shape: hex, label: "<code> product </code>\n * "}
+  store.product_price@{shape: rect, label: "<code> product price </code>"}
+  store.product_qty@{shape: rect, label: "<code> product quantity </code>"}
+
+  store.sneakers_price@{shape: rect, label: "sneakers price"}
+  store.delivery_fee@{shape: rect, label: "delivery fee"}
+
+  store.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
+  store.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value"}
+  store.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
+  store.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
+
+  store.deal_price --> |NO DISCOUNT| store.order_sum
+  store.deal_price --> |order discount| store.First_Order_Discount_Engine.result
+  store.First_Order_Discount_Engine.result --> store.First_Order_Discount_Engine.calculation
+  store.First_Order_Discount_Engine.calculation ------> store.order_sum
+
+  store.order_sum --> store.cart_sum
+  store.cart_sum --> store.product
+  store.product --> store.product_price & store.product_qty
+  store.product_price --> store.sneakers_price
+  store.product_qty --> store.sneakers_qty@{label: "<code> 1 </code>"}
+  store.order_sum --> store.delivery_fee
+  store.First_Order_Discount_Engine.calculation --> store.First_Order_Discount_Engine.calculation.discount
+  store.First_Order_Discount_Engine.calculation.discount -.- store.First_Order_Discount_Engine.calculation.discount.value
+  store.First_Order_Discount_Engine.calculation.discount -.- store.First_Order_Discount_Engine.calculation.discount.zero
+  store.First_Order_Discount_Engine.calculation.discount.value -.- |YES| store.First_Order_Discount_Engine.eq
+  store.First_Order_Discount_Engine.calculation.discount.zero -.- |NO| store.First_Order_Discount_Engine.eq
+  store.First_Order_Discount_Engine.eq --> store.order_count
+
+subgraph First_Order_Discount_Engine
+  store.First_Order_Discount_Engine.result
+  store.First_Order_Discount_Engine.calculation
+  store.First_Order_Discount_Engine.calculation.discount
+  store.First_Order_Discount_Engine.calculation.discount.value
+  store.First_Order_Discount_Engine.calculation.discount.zero
+  store.First_Order_Discount_Engine.eq
+end
+store.order_count@{label: "order count"}
+
+store.delivery_fee ----> |NO DISCOUNT| store.delivery_fee.input
+store.delivery_fee ---> |delivery discount| Result
+    GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
+    DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
+    DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
+    Result
+    Result -.- DeliveryFee
+    Result -.- DeliveryNull
+subgraph DeliveryDiscountEngine
+    direction TB
+    Result
+    DeliveryFee
+    DeliveryNull
+    GT
+  end
+
+DeliveryFee ---> store.delivery_fee.input
+GT --> store.cart_sum
+
+subgraph INPUT_Order_Data
+  store.sneakers_price
+  store.delivery_fee.input@{label: "<code> regular delivery fee</code>"}
+  store.sneakers_qty
+  store.order_count
+end
+
+First_Order_Discount_Engine --------> store.first_order_discount
+DeliveryDiscountEngine -------> store.delivery_discount
+
+subgraph INPUT_Control_Flow_Data
+  store.first_order_discount@{label: "<code> apply first order discount: \n YES(1) / NO(0) </code>"}
+  store.delivery_discount@{label: "<code>apply delivery discount: \n YES(1) / NO(0) </code>"}
+end
+
+subgraph INPUT
+  INPUT_Order_Data
+  INPUT_Control_Flow_Data
+  store.name@{label: "<code> store name </code>"}
+end
+```
