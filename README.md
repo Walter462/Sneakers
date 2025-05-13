@@ -1,3 +1,40 @@
+
+# Table of Contents
+
+# Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [Table of Contents](#table-of-contents-1)
+- [1. Sneakers](#1-sneakers)
+- [2. Problem](#2-problem)
+- [3. Categorise the problem](#3-categorise-the-problem)
+- [4. Elements: extract](#4-elements-extract)
+  - [4.1. `decision`](#41-decision)
+  - [4.2. `store list`](#42-store-list)
+  - [4.3. `store`](#43-store)
+  - [4.4. `deal price`](#44-deal-price)
+- [5. Elements: relations](#5-elements-relations)
+  - [5.1. `decision` \<-\> `store list`](#51-decision---store-list)
+  - [5.2 `store list` \<-\> `store`](#52-store-list---store)
+  - [5.3 `store` \<-\> `deal price`](#53-store---deal-price)
+- [6. Elements: diagram](#6-elements-diagram)
+- [7. `deal price`](#7-deal-price)
+  - [7.1 `deal price` no additional conditions](#71-deal-price-no-additional-conditions)
+    - [7.1.1. `deal price` no additional conditions algorithm](#711-deal-price-no-additional-conditions-algorithm)
+    - [7.1.2. Store2 \& Store4 problem diagrams](#712-store2--store4-problem-diagrams)
+    - [7.1.3. Store2 apply algorithm](#713-store2-apply-algorithm)
+    - [7.1.4. Store4 apply algorithm](#714-store4-apply-algorithm)
+  - [7.2. `deal price` with additional conditions](#72-deal-price-with-additional-conditions)
+    - [7.2.1 Store 1 delivery discount](#721-store-1-delivery-discount)
+    - [7.2.2. Store1 problem diagrams](#722-store1-problem-diagrams)
+    - [7.2.3. Store1 apply algorithm](#723-store1-apply-algorithm)
+    - [7.2.4 Store3 first order discount](#724-store3-first-order-discount)
+    - [7.2.5. Store3 problem diagrams](#725-store3-problem-diagrams)
+    - [7.2.6 Store3 apply algorithm](#726-store3-apply-algorithm)
+- [8. Working out the solution](#8-working-out-the-solution)
+- [9. `deal price` algorithmic patterns](#9-deal-price-algorithmic-patterns)
+
+
 # 1. Sneakers
 
 This is a  README for the mock project "Sneakers".
@@ -439,7 +476,7 @@ To get the `deal price` we need to evaluate the expression in the brackets. Lets
 
 ### 7.2.2. Store1 problem diagrams
 
-<a name="delivery-discount-deal-price"></a
+<a name="delivery-discount-deal-price"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -851,10 +888,10 @@ end
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
-  store3.deal_price@{shape: card, label: "<code> deal price </code>"}
-  store3@{shape: doc} --> |has|store3.deal_price
+  store3@{shape: doc, label: "Store3 \n 96.84"} --> |has|store3.deal_price
+  store3.deal_price@{shape: card, label: "<code> deal price \n 96.84 </code>"}
 
-%% ======================================================== Store3 start ===================================================
+%% ================================================ Store3 start ===================================================
 
   store3.First_Order_Discount_Engine.result@{label: "result:\n 96.84"}
   store3.First_Order_Discount_Engine.calculation@{shape: diamond, label: " - "}
@@ -912,7 +949,7 @@ The analysis shows that we got 3 different algorithms to calculate the `deal pri
 By applying this algorithms to corresponding stores we can get the deal prices.
 - [Store1](#delivery-discount-deal-price-store1): $101.05$
 - [Store2](#non-conditional-deal-price-store2): $98.94$
-- [Store3](#first-order-discount-deal-price-store3): $97.84$
+- [Store3](#first-order-discount-deal-price-store3): $96.84$
 - [Store4](#non-conditional-deal-price-store4): $100.00$
 
 
@@ -921,18 +958,18 @@ By applying this algorithms we can get the correct answer to the problem.
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
-  decision@{shape: rect, label: "<code>decision: \n 97.84</code>"}
+  decision@{shape: rect, label: "<code>decision: \n 96.84</code>"}
   decision -->|get best deal store| minf
-  minf@{shape: hex, label: "find minimum value function:\n<code>min([101.05, 98.94, 97.84, 100.00])</code>"}
-  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list:</code> \n <code>[101.05, 98.94, 97.84, 100.00] </code>"}
+  minf@{shape: hex, label: "find minimum value function:\n<code>min([101.05, 98.94, 96.84, 100.00])</code>"}
+  minf -->|apply to| StoreList@{shape: docs, label: "<code>store list =</code> \n <code>[101.05, 98.94, 96.84, 100.00] </code>"}
   StoreList --> |includes|Store1@{shape: doc, label: "Store1:\n 101.05"}
   StoreList --> |includes|Store2@{shape: doc, label: "Store2:\n 98,94"}
-  StoreList --> |includes|Store3@{shape: doc, label: "Store1:\n 97.84"}
+  StoreList --> |includes|Store3@{shape: doc, label: "Store1:\n 96.84"}
   StoreList --> |includes|Store4@{shape: doc, label: "Store1:\n 100.00"}
 
   Store1@{shape: doc} --> |has|deal_price1@{shape: card, label: "<code>deal price</code>\n 101.05"}
   Store2@{shape: doc} --> |has|deal_price2@{shape: card, label: "<code>deal price</code>\n 98.94"}
-  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>\n 97.84"}
+  Store3@{shape: doc} --> |has|deal_price3@{shape: card, label: "<code>deal price</code>\n 96.84"}
   Store4@{shape: doc} --> |has|deal_price4@{shape: card, label: "<code>deal price</code>\n 100.00"}
 ```
 
