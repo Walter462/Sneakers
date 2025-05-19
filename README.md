@@ -4,7 +4,7 @@
 - [Table of Contents](#table-of-contents)
 - [1. Sneakers](#1-sneakers)
 - [2. Problem](#2-problem)
-- [3. Categorise the problem](#3-categorise-the-problem)
+- [3. Problem categorization](#3-problem-categorization)
 - [4. Elements: extract](#4-elements-extract)
   - [4.1. `decision`](#41-decision)
   - [4.2. `store list`](#42-store-list)
@@ -30,6 +30,8 @@
     - [7.2.6 Store3 apply algorithm](#726-store3-apply-algorithm)
 - [8. Working out the solution](#8-working-out-the-solution)
 - [9. `deal price` algorithmic patterns](#9-deal-price-algorithmic-patterns)
+- [10. `deal price` general algorithm](#10-deal-price-general-algorithm)
+- [11. Tom's data table review](#11-toms-data-table-review)
 
 
 # 1. Sneakers
@@ -60,7 +62,7 @@ Tom found a few websites that sell the sneakers he picked. To decide which store
 | Store 4 | $100.00$            | Free              | None                                          |
 
 
-# 3. Categorise the problem
+# 3. Problem categorization
 [Back to the table of contents](#toc)
 
 Tom needs to decide which store to buy from. Assuming that the quality of the sneakers is the same, the `decision` problem is to choose the store with the lowest expenses (best `deal price`).
@@ -1128,15 +1130,18 @@ There are some patterns that we can identify.
 > - 2. If applicable: apply Delivery Discount
 > - 3. Calculate `order sum`
 > - 4. If applicable: apply First Order Discount
+> - 5. Return `deal_price`
 
+
+# 10. `deal price` general algorithm
+[Back to the table of contents](#toc)
 
 >[!important]
-> This results into universal algorithm to apply in all cases instead of 3 different algorithms for each case.
+> At this point we can see that we can merge all three patterns into a single algorithm to apply in all cases instead of 3 different algorithms for each case.
 >
-> This is the filan goal: to produce a universal algorithm that can be applied to input data to produce the problem solution.
+> This is the final problem solving goal: to produce a universal algorithm that can be applied to input data to produce the problem solution in similar cases.
 
-
-
+<a name="deal_price_general_algorithm"></a>
 ```mermaid
 %%{ init : { "themeVariables": { "htmlLabels": true }}}%%
 graph TB
@@ -1156,16 +1161,16 @@ store.deal_price@{shape: card, label: "<code> deal price </code>"}
   store.delivery_fee@{shape: rect, label: "delivery fee"}
 
   store.First_Order_Discount_Engine.calculation.discount@{shape: rect, label: "discount to apply"}
-  store.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value"}
+  store.First_Order_Discount_Engine.calculation.discount.value@{shape: rect, label: "discount value (10.53)"}
   store.First_Order_Discount_Engine.calculation.discount.zero@{shape: rect, label: "0"}
   store.First_Order_Discount_Engine.eq@{shape: hex, label: "first order check:\n <code> first_order == 1 </code>"}
 
   store.deal_price --> |NO DISCOUNT| store.order_sum
   store.deal_price --> |order discount| store.First_Order_Discount_Engine.result
   store.First_Order_Discount_Engine.result --> store.First_Order_Discount_Engine.calculation
-  store.First_Order_Discount_Engine.calculation ------> store.order_sum
+  store.First_Order_Discount_Engine.calculation --> store.order_sum
 
-  store.order_sum --> store.cart_sum
+  store.order_sum ---> store.cart_sum
   store.cart_sum --> store.product
   store.product --> store.product_price & store.product_qty
   store.product_price --> store.sneakers_price
@@ -1188,9 +1193,9 @@ subgraph First_Order_Discount_Engine
 end
 store.order_count@{label: "order count"}
 
-store.delivery_fee ----> |NO DISCOUNT| store.delivery_fee.input
-store.delivery_fee ---> |delivery discount| Result
-    GT@{shape: hex, label: "<code>cart sum > threshold \n yes(1) / no(0)?</code>"}
+store.delivery_fee --> |NO DISCOUNT| store.delivery_fee.input
+store.delivery_fee --> |delivery discount| Result
+    GT@{shape: hex, label: "<code>cart sum > threshold (105.26) \n yes(1) / no(0)?</code>"}
     DeliveryFee@{shape: rect, label: "<code> regular delivery fee</code>"} -.-|NO| GT
     DeliveryNull@{shape: rect, label: "0"} -.- |YES|GT
     Result
@@ -1206,6 +1211,14 @@ subgraph DeliveryDiscountEngine
 
 DeliveryFee ---> store.delivery_fee.input
 GT --> store.cart_sum
+First_Order_Discount_Engine --------> store.first_order_discount
+DeliveryDiscountEngine -------> store.delivery_discount
+
+subgraph INPUT
+  INPUT_Order_Data
+  INPUT_Control_Flow_Data
+  store.name@{label: "<code> store name </code>"}
+end
 
 subgraph INPUT_Order_Data
   store.sneakers_price
@@ -1214,17 +1227,89 @@ subgraph INPUT_Order_Data
   store.order_count
 end
 
-First_Order_Discount_Engine --------> store.first_order_discount
-DeliveryDiscountEngine -------> store.delivery_discount
-
 subgraph INPUT_Control_Flow_Data
   store.first_order_discount@{label: "<code> apply first order discount: \n YES(1) / NO(0) </code>"}
   store.delivery_discount@{label: "<code>apply delivery discount: \n YES(1) / NO(0) </code>"}
 end
-
-subgraph INPUT
-  INPUT_Order_Data
-  INPUT_Control_Flow_Data
-  store.name@{label: "<code> store name </code>"}
-end
 ```
+
+By looking at the bottom of the diagram we can see that there is specific data structure that is required to make the decision:
+- Order data
+  - sneakers price
+  - sneakers quantity
+  - regular delivery fee
+  - order count
+- Store data
+  - store name
+  - applicable discounts:
+    - first order discount
+    - delivery discount 
+
+# 11. Tom's data table review
+
+Lets review the data table that Tom [provided us with](#deal-price-abstraction-table) and upgrage it using the data structure that we have just defined.
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Store name</th>
+      <th colspan="3">Order, USD</th>
+      <th colspan="2">Delivery discount</th>
+      <th colspan="2">First order discount</th>
+    </tr>
+    <tr>
+      <th>Sneakers price, USD</th>
+      <th>Quantity, pcs</th>
+      <th>Regular delivery fee, USD</th>
+      <th>Applicable</th>
+      <th>Cart sum threshold, USD</th>
+      <th>Applicable</th>
+      <th>Discount value, USD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Store 1</td>
+      <td>$97.89</td>
+      <td>1</td>
+      <td>$3.16</td>
+      <td>Yes</td>
+      <td>105.26</td>
+      <td>No</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Store 2</td>
+      <td>$93.68</td>
+      <td>1</td>
+      <td>$5.26</td>
+      <td>No</td>
+      <td></td>
+      <td>No</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Store 3</td>
+      <td>$105.26</td>
+      <td>1</td>
+      <td>$2.11</td>
+      <td>No</td>
+      <td></td>
+      <td>Yes</td>
+      <td>10.53</td>
+    </tr>
+    <tr>
+      <td>Store 4</td>
+      <td>$100.00</td>
+      <td>1</td>
+      <td>Free</td>
+      <td>No</td>
+      <td></td>
+      <td>No</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+Now the table is getting more formal and structured. We can start programming.
+
