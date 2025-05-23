@@ -13,6 +13,17 @@ store1 = {
 }
 
 class Store:
+  def __new__(cls, *args, **kwargs):
+    '''
+    Discounts subclasses factory
+    '''
+    if kwargs.get('delivery_discount_applicable') is True:
+      return super().__new__(DeliveryDiscount)
+    elif kwargs.get('first_order_discount_applicable') is True:
+      return super().__new__(FirstOrderDiscount)
+    else:
+      return super().__new__(NoDiscount)
+
   def __init__(self, 
               name, 
               price, 
@@ -65,7 +76,7 @@ class DeliveryDiscount(Store):
               delivery_discount_applicable,
               cart_sum_threshold,
               **kwargs):
-    super().__init__(**kwargs)
+    super().__init__(**kwargs) #initialise attributes and methods of the parent class
     self.delivery_discount_applicable = delivery_discount_applicable
     self.cart_sum_threshold = cart_sum_threshold
   
@@ -77,14 +88,14 @@ class DeliveryDiscount(Store):
 
 class FirstOrderDiscount(Store):
   '''
-  Apply first order discount logic
+  Apply first order discount logic.
   '''
   def __init__(self,
               first_order_discount_applicable,
               first_order_discount_value,
               order_count,
               **kwargs):
-    super().__init__(**kwargs)
+    super().__init__(**kwargs) #initialise attributes and methods of the parent class
     self.first_order_discount_applicable = first_order_discount_applicable
     self.first_order_discount_value = first_order_discount_value
     self.order_count = order_count
@@ -96,7 +107,7 @@ def deal_price(self):
     return self.order_sum()
 
 
-S1 = Store.store_subclasses_factory(store1)
+S1 = Store(**store1)
 print(S1.deal_price())
 
 
