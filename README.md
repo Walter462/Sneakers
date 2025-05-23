@@ -1312,4 +1312,3 @@ Lets review the data table that Tom [provided us with](#deal-price-abstraction-t
 </table>
 
 Now the table is getting more formal and structured. We can start programming.
-
